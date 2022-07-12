@@ -44,6 +44,8 @@ services:
       - ZEPPELIN_SPARK_MAXRESULT=10000
       - ZEPPELIN_INTERPRETER_OUTPUT_LIMIT=204800
       - ZEPPELIN_NOTEBOOK_COLLABORATIVE_MODE_ENABLE=false
+    env_file:
+      - ./.env
     healthcheck:
       interval: 5s
       retries: 10

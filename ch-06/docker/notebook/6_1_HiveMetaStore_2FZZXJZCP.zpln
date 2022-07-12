@@ -87,9 +87,50 @@
       "status": "FINISHED"
     },
     {
+      "text": "%spark\nspark.sparkContext.getConf.toDebugString",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 15:50:47.062",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mres1\u001b[0m: \u001b[1m\u001b[32mString\u001b[0m \u003d\nPYSPARK_DRIVER_PYTHON\u003dpython\nPYSPARK_PYTHON\u003dpython\nSPARK_HOME\u003d/spark/spark-3.0.1-bin-hadoop3.2\nspark.app.id\u003dlocal-1657641011992\nspark.app.name\u003dspark-shared_process\nspark.driver.cores\u003d1\nspark.driver.extraClassPath\u003d:/opt/zeppelin/interpreter/spark/*:::/opt/zeppelin/interpreter/zeppelin-interpreter-shaded-0.9.0.jar:/opt/zeppelin/interpreter/spark/spark-interpreter-0.9.0.jar\nspark.driver.extraJavaOptions\u003d -Dfile.encoding\u003dUTF-8 -Dlog4j.configuration\u003dfile:///opt/zeppelin/conf/log4j.properties -Dlog4j.configurationFile\u003dfile:///opt/zeppelin/conf/log4j2.properties -Dzeppelin.log.file\u003d/logs/zeppelin-interpreter-spark-shared_process--zeppelin.log\nspark.driver.host\u003dzeppelin\nspark.driver.memory\u003d1g\nspark.driver.port\u003d36717\nspark.executor.cores\u003d1\nspark.executor....\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657641020541_1749314489",
+      "id": "paragraph_1657641020541_1749314489",
+      "dateCreated": "2022-07-12 15:50:20.541",
+      "dateStarted": "2022-07-12 15:50:35.683",
+      "dateFinished": "2022-07-12 15:50:35.835",
+      "status": "FINISHED"
+    },
+    {
       "text": "%spark\nspark.sparkContext.getConf.getAllWithPrefix(\"spark.sql\")\nval sparkConf \u003d spark.sparkContext.getConf\nval sparkSqlWareHouse \u003d sparkConf.get(\"spark.sql.warehouse.dir\")\nval sparkSqlCatalogType \u003d sparkConf.get(\"spark.sql.catalogImplementation\")\nval hiveMetaDataVersion \u003d sparkConf.get(\"spark.sql.hive.metastore.version\")\nval hiveMetaStoreDependencies \u003d sparkConf.get(\"spark.sql.hive.metastore.jars\")",
       "user": "anonymous",
-      "dateUpdated": "2022-07-12 15:30:43.693",
+      "dateUpdated": "2022-07-12 15:50:03.493",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -123,8 +164,8 @@
       "jobName": "paragraph_1614032139535_1034844617",
       "id": "paragraph_1614032139535_1034844617",
       "dateCreated": "2021-02-22 22:15:39.535",
-      "dateStarted": "2022-07-12 15:30:43.712",
-      "dateFinished": "2022-07-12 15:30:55.809",
+      "dateStarted": "2022-07-12 15:50:03.509",
+      "dateFinished": "2022-07-12 15:50:15.953",
       "status": "ERROR"
     },
     {
@@ -173,7 +214,7 @@
     {
       "text": "%sh\nls -la /spark/jars | grep hive",
       "user": "anonymous",
-      "dateUpdated": "2022-07-12 15:34:43.302",
+      "dateUpdated": "2022-07-12 15:50:43.057",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -211,14 +252,44 @@
       "jobName": "paragraph_1614123754324_2141490739",
       "id": "paragraph_1614123754324_2141490739",
       "dateCreated": "2021-02-23 23:42:34.324",
-      "dateStarted": "2022-07-12 15:34:43.321",
-      "dateFinished": "2022-07-12 15:34:45.048",
+      "dateStarted": "2022-07-12 15:50:43.062",
+      "dateFinished": "2022-07-12 15:50:44.717",
       "status": "ERROR"
+    },
+    {
+      "text": "%spark\n// Create a New SparkSession with Apache Hive Support\n",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 15:55:16.015",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/text",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657641296046_151117918",
+      "id": "paragraph_1657641296046_151117918",
+      "dateCreated": "2022-07-12 15:54:56.047",
+      "status": "READY"
     },
     {
       "text": "%spark\nimport java.io.File\nimport org.apache.spark.sql._\n\n// create another SparkSession with explicit Hive Support\nval sparkSessionHive \u003d SparkSession.builder\n  .master(spark.conf.get(\"spark.master\"))\n  .config(spark.sparkContext.getConf)\n  .appName(\"hive-support\")\n  .enableHiveSupport()\n  .getOrCreate()",
       "user": "anonymous",
-      "dateUpdated": "2021-03-13 21:20:45.337",
+      "dateUpdated": "2022-07-12 15:54:52.307",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -242,7 +313,7 @@
         "msg": [
           {
             "type": "TEXT",
-            "data": "import java.io.File\nimport org.apache.spark.sql._\n\u001b[1m\u001b[34msparkSessionHive\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.SparkSession\u001b[0m \u003d org.apache.spark.sql.SparkSession@6be3bb04\n"
+            "data": "import java.io.File\nimport org.apache.spark.sql._\n\u001b[1m\u001b[34msparkSessionHive\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.SparkSession\u001b[0m \u003d org.apache.spark.sql.SparkSession@4bcf263\n"
           }
         ]
       },
@@ -252,14 +323,14 @@
       "jobName": "paragraph_1614033004668_108238026",
       "id": "paragraph_1614033004668_108238026",
       "dateCreated": "2021-02-22 22:30:04.668",
-      "dateStarted": "2021-03-13 21:20:45.362",
-      "dateFinished": "2021-03-13 21:20:45.892",
+      "dateStarted": "2022-07-12 15:54:52.314",
+      "dateFinished": "2022-07-12 15:54:52.545",
       "status": "FINISHED"
     },
     {
-      "text": "%spark\n\nsparkSessionHive.sql(\"show tables;\").show",
+      "text": "%spark\n// Listing Available Databases\n\nsparkSessionHive\n.sql(\"show databases;\") .show",
       "user": "anonymous",
-      "dateUpdated": "2021-03-13 21:25:56.019",
+      "dateUpdated": "2022-07-12 15:55:57.169",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -283,7 +354,7 @@
         "msg": [
           {
             "type": "TEXT",
-            "data": "+--------+---------+-----------+\n|database|tableName|isTemporary|\n+--------+---------+-----------+\n|        |customers|       true|\n+--------+---------+-----------+\n\n"
+            "data": "+---------+\n|namespace|\n+---------+\n|  default|\n+---------+\n\n"
           }
         ]
       },
@@ -293,8 +364,49 @@
       "jobName": "paragraph_1614033667916_1671895241",
       "id": "paragraph_1614033667916_1671895241",
       "dateCreated": "2021-02-22 22:41:07.919",
-      "dateStarted": "2021-03-13 21:25:56.035",
-      "dateFinished": "2021-03-13 21:25:56.404",
+      "dateStarted": "2022-07-12 15:55:44.362",
+      "dateFinished": "2022-07-12 15:55:45.078",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n// Using the Spark SQL Catalog to List Databases\n\nsparkSessionHive\n.catalog .listDatabases .show(truncate\u003dfalse)",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 15:56:47.283",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+----------------+----------------------------------+\n|name   |description     |locationUri                       |\n+-------+----------------+----------------------------------+\n|default|default database|file:/opt/zeppelin/spark-warehouse|\n+-------+----------------+----------------------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657641375135_1425080618",
+      "id": "paragraph_1657641375135_1425080618",
+      "dateCreated": "2022-07-12 15:56:15.136",
+      "dateStarted": "2022-07-12 15:56:34.418",
+      "dateFinished": "2022-07-12 15:56:35.111",
       "status": "FINISHED"
     },
     {
