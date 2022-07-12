@@ -36,7 +36,7 @@ function start() {
     echo "mysqldir doesn't exist. Adding docker/data/mysqldir for mysql database"
     mkdir "${PWD}/data/mysqldir"
   fi
-  sparkExists
+  # sparkExists
   createNetwork
   docker-compose -f ${DOCKER_COMPOSE_FILE} up -d --remove-orphans mysql
   docker-compose -f ${DOCKER_COMPOSE_FILE} up -d --remove-orphans zeppelin

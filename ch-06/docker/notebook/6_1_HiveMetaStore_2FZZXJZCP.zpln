@@ -4,6 +4,7 @@
       "text": "%md\n## Bootstrap the Environment\nFrom the same directory where you launched this Zeppelin notebook `/ch-06/docker`\n1. `./run.sh bootstrap`\n\n#### Initalize the hive database and tables\n1. `docker exec -it mysql bash`\n2. `docker exec -it mysql printenv | grep MYSQL_ROOT_PASSWORD | sed -E  \u0027s/(.*)\u003d{1}(.*)/\\2/\u0027`. Or obtain it from the `docker-compose-all.yaml`\n3. `mysql -u root -p`\n4. `enter the password from step 2`\n5. `source bootstrap-hive.sql`\n",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:51:52.411",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -46,6 +47,7 @@
       "text": "%md\n## Interoperating with MySQL and Apache Spark\nThe **Hive Metastore** can be used as a Data Catalog within the Spark ecosystem. This means that you can publish rich descriptions of the data your are producing, and this can be equally as useful when fetching data from other `tables` not managed by you or your team.\n\n### Hive MetaStore Configuration\n~~~\nspark.sql.hive.metastore.version: 2.3.7\nspark.sql.hive.metastore.jars: builtin\nspark.sql.hive.metastore.schema.verification: true\nspark.sql.hive.metastore.schema.verification.record.version: true\nspark.hadoop.javax.jdo.option.ConnectionURL jdbc:mysql://mysql:3306/default\nspark.hadoop.javax.jdo.option.ConnectionDriverName org.mariadb.jdbc.Driver\nspark.hadoop.javax.jdo.option.ConnectionUserName dataeng\nspark.hadoop.javax.jdo.option.ConnectionPassword dataengineering_user",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:13:15.573",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -87,7 +89,8 @@
     {
       "text": "%spark\nspark.sparkContext.getConf.getAllWithPrefix(\"spark.sql\")\nval sparkConf \u003d spark.sparkContext.getConf\nval sparkSqlWareHouse \u003d sparkConf.get(\"spark.sql.warehouse.dir\")\nval sparkSqlCatalogType \u003d sparkConf.get(\"spark.sql.catalogImplementation\")\nval hiveMetaDataVersion \u003d sparkConf.get(\"spark.sql.hive.metastore.version\")\nval hiveMetaStoreDependencies \u003d sparkConf.get(\"spark.sql.hive.metastore.jars\")",
       "user": "anonymous",
-      "dateUpdated": "2021-03-13 21:13:18.985",
+      "dateUpdated": "2022-07-12 15:30:43.693",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -106,11 +109,11 @@
         "forms": {}
       },
       "results": {
-        "code": "SUCCESS",
+        "code": "ERROR",
         "msg": [
           {
             "type": "TEXT",
-            "data": "\u001b[1m\u001b[34msparkConf\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.SparkConf\u001b[0m \u003d org.apache.spark.SparkConf@32a58e04\n\u001b[1m\u001b[34msparkSqlWareHouse\u001b[0m: \u001b[1m\u001b[32mString\u001b[0m \u003d /spark/sql/warehouse/\n\u001b[1m\u001b[34msparkSqlCatalogType\u001b[0m: \u001b[1m\u001b[32mString\u001b[0m \u003d hive\n\u001b[1m\u001b[34mhiveMetaDataVersion\u001b[0m: \u001b[1m\u001b[32mString\u001b[0m \u003d 2.3.7\n\u001b[1m\u001b[34mhiveMetaStoreDependencies\u001b[0m: \u001b[1m\u001b[32mString\u001b[0m \u003d builtin\n"
+            "data": "java.util.NoSuchElementException: spark.sql.warehouse.dir\n  at org.apache.spark.SparkConf.$anonfun$get$1(SparkConf.scala:254)\n  at scala.Option.getOrElse(Option.scala:189)\n  at org.apache.spark.SparkConf.get(SparkConf.scala:254)\n  ... 44 elided\n"
           }
         ]
       },
@@ -120,14 +123,15 @@
       "jobName": "paragraph_1614032139535_1034844617",
       "id": "paragraph_1614032139535_1034844617",
       "dateCreated": "2021-02-22 22:15:39.535",
-      "dateStarted": "2021-03-13 21:13:19.012",
-      "dateFinished": "2021-03-13 21:13:37.147",
-      "status": "FINISHED"
+      "dateStarted": "2022-07-12 15:30:43.712",
+      "dateFinished": "2022-07-12 15:30:55.809",
+      "status": "ERROR"
     },
     {
       "text": "%md\n## Spark Hive Jars\nYou will need to be working with a version of Spark that is built with all the right hive jars (`2.3.7`).\n\nRunning the following `shell` block will automatically scan and find the `hive` jars from your `SPARK_HOME`.",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:13:40.660",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -169,7 +173,8 @@
     {
       "text": "%sh\nls -la /spark/jars | grep hive",
       "user": "anonymous",
-      "dateUpdated": "2021-03-13 21:13:43.698",
+      "dateUpdated": "2022-07-12 15:34:43.302",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -188,11 +193,15 @@
         "forms": {}
       },
       "results": {
-        "code": "SUCCESS",
+        "code": "ERROR",
         "msg": [
           {
             "type": "TEXT",
-            "data": "-rw-r--r--   1 zeppelin root   183472 Feb 22 02:11 hive-beeline-2.3.7.jar\n-rw-r--r--   1 zeppelin root    43387 Feb 22 02:11 hive-cli-2.3.7.jar\n-rw-r--r--   1 zeppelin root   436980 Feb 22 02:11 hive-common-2.3.7.jar\n-rw-r--r--   1 zeppelin root 10839104 Feb 22 02:11 hive-exec-2.3.7-core.jar\n-rw-r--r--   1 zeppelin root   116311 Feb 22 02:11 hive-jdbc-2.3.7.jar\n-rw-r--r--   1 zeppelin root   326419 Feb 22 02:11 hive-llap-common-2.3.7.jar\n-rw-r--r--   1 zeppelin root  8194428 Feb 22 02:11 hive-metastore-2.3.7.jar\n-rw-r--r--   1 zeppelin root   916206 Feb 22 02:11 hive-serde-2.3.7.jar\n-rw-r--r--   1 zeppelin root  1679364 Feb 22 02:11 hive-service-rpc-3.1.2.jar\n-rw-r--r--   1 zeppelin root    54116 Feb 22 02:11 hive-shims-0.23-2.3.7.jar\n-rw-r--r--   1 zeppelin root     8785 Feb 22 02:11 hive-shims-2.3.7.jar\n-rw-r--r--   1 zeppelin root   120305 Feb 22 02:11 hive-shims-common-2.3.7.jar\n-rw-r--r--   1 zeppelin root    12984 Feb 22 02:11 hive-shims-scheduler-2.3.7.jar\n-rw-r--r--   1 zeppelin root   236672 Feb 22 02:11 hive-storage-api-2.7.2.jar\n-rw-r--r--   1 zeppelin root    38352 Feb 22 02:11 hive-vector-code-gen-2.3.7.jar\n-rw-r--r--   1 zeppelin root   694449 Feb 22 02:11 spark-hive_2.12-3.1.1.jar\n-rw-r--r--   1 zeppelin root   542420 Feb 22 02:11 spark-hive-thriftserver_2.12-3.1.1.jar\n"
+            "data": "ls: cannot access \u0027/spark/jars\u0027: No such file or directory\n"
+          },
+          {
+            "type": "TEXT",
+            "data": "ExitValue: 1"
           }
         ]
       },
@@ -202,14 +211,15 @@
       "jobName": "paragraph_1614123754324_2141490739",
       "id": "paragraph_1614123754324_2141490739",
       "dateCreated": "2021-02-23 23:42:34.324",
-      "dateStarted": "2021-03-13 21:13:43.715",
-      "dateFinished": "2021-03-13 21:13:44.862",
-      "status": "FINISHED"
+      "dateStarted": "2022-07-12 15:34:43.321",
+      "dateFinished": "2022-07-12 15:34:45.048",
+      "status": "ERROR"
     },
     {
       "text": "%spark\nimport java.io.File\nimport org.apache.spark.sql._\n\n// create another SparkSession with explicit Hive Support\nval sparkSessionHive \u003d SparkSession.builder\n  .master(spark.conf.get(\"spark.master\"))\n  .config(spark.sparkContext.getConf)\n  .appName(\"hive-support\")\n  .enableHiveSupport()\n  .getOrCreate()",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:20:45.337",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -250,6 +260,7 @@
       "text": "%spark\n\nsparkSessionHive.sql(\"show tables;\").show",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:25:56.019",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -290,6 +301,7 @@
       "text": "%spark\nsparkSessionHive.conf.get(\"spark.sql.catalogImplementation\")",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:20:52.771",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -330,6 +342,7 @@
       "text": "%spark\nsparkSessionHive.sharedState.externalCatalog.listTables(\"default\")",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:20:56.201",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -370,6 +383,7 @@
       "text": "%spark\nval jdbcDriver \u003d spark.conf.get(\"spark.jdbc.driver.class\", \"org.mariadb.jdbc.Driver\")\nval dbHost     \u003d spark.conf.get(\"spark.jdbc.host\",\"mysql\")\nval dbPort     \u003d spark.conf.get(\"spark.jdbc.port\", \"3306\")\nval defaultDb  \u003d spark.conf.get(\"spark.jdbc.default.db\", \"default\")\nval dbTable    \u003d spark.conf.get(\"spark.jdbc.table\", \"bettercustomers\")\nval dbUser     \u003d spark.conf.get(\"spark.jdbc.user\", \"dataeng\")\nval dbPass     \u003d spark.conf.get(\"spark.jdbc.password\", \"dataengineering_user\")\n\nval connectionUrl \u003d s\"jdbc:mysql://$dbHost:$dbPort/$defaultDb\"\n\nval betterCustomers \u003d sparkSessionHive.read\n  .format(\"jdbc\")\n  .option(\"url\", connectionUrl)\n  .option(\"driver\", jdbcDriver)\n  .option(\"dbtable\", \"bettercustomers\")\n  .option(\"user\", dbUser)\n  .option(\"password\", dbPass)\n  .load()\n  \nbetterCustomers.show\n\nbetterCustomers.createOrReplaceTempView(\"customers\")\n\n",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:21:02.272",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -423,6 +437,7 @@
       "text": "%spark\nbetterCustomers.schema",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:21:12.959",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -464,6 +479,7 @@
       "text": "%spark\nsparkSessionHive.catalog.currentDatabase",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:21:18.246",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -505,6 +521,7 @@
       "text": "%sql\nselect * from customers;",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:22:20.518",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -591,6 +608,7 @@
       "text": "%spark\nsparkSessionHive.catalog.listTables.show\n",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:28:43.908",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -632,6 +650,7 @@
       "text": "%spark\nbetterCustomers\n  .write\n  .mode(\"overwrite\")\n  .saveAsTable(\"hive_customers\")",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:28:30.490",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -681,6 +700,7 @@
       "text": "%md\n## Loading Data using the Hive MetaStore\n\n~~~\nspark.table(\"{TABLE_NAME}\")\n~~~\n\nFor example. We will load the `hive_customers` table we just stored into our Data Lake below.",
       "user": "anonymous",
       "dateUpdated": "2021-02-25 23:41:22.868",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -724,6 +744,7 @@
       "text": "%spark\nval fromDataLake \u003d sparkSessionHive.table(\"hive_customers\")\nfromDataLake.printSchema\nfromDataLake.show()",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:29:12.196",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -779,6 +800,7 @@
       "text": "%sql\nselect * from hive_customers;",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:29:32.799",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -866,6 +888,7 @@
       "text": "%md\n# MySQL MetaStore Data for your `hive_customers` Table\n\n## Exploring the MetaData Stored in MySQL\n\n~~~\nmysql\u003e select * from TBLS;\n+--------+-------------+-------+------------------+----------+-----------+-------+----------------+---------------+--------------------+--------------------+----------------------------------------+\n| TBL_ID | CREATE_TIME | DB_ID | LAST_ACCESS_TIME | OWNER    | RETENTION | SD_ID | TBL_NAME       | TBL_TYPE      | VIEW_EXPANDED_TEXT | VIEW_ORIGINAL_TEXT | IS_REWRITE_ENABLED                     |\n+--------+-------------+-------+------------------+----------+-----------+-------+----------------+---------------+--------------------+--------------------+----------------------------------------+\n|      1 |  1614132850 |     1 |                0 | zeppelin |         0 |     1 | hive_customers | MANAGED_TABLE | NULL               | NULL               | 0x00                                   |\n+--------+-------------+-------+------------------+----------+-----------+-------+----------------+---------------+--------------------+--------------------+----------------------------------------+\n1 row in set (0.00 sec)\n~~~\n\n~~~\nmysql\u003e select * from TABLE_PARAMS;\n+--------+-----------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+\n| TBL_ID | PARAM_KEY                         | PARAM_VALUE                                                                                                                                                                                                                                                                                                                                                                                                                            |\n+--------+-----------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+\n|      1 | numFiles                          | 1                                                                                                                                                                                                                                                                                                                                                                                                                                      |\n|      1 | spark.sql.create.version          | 3.0.1                                                                                                                                                                                                                                                                                                                                                                                                                                  |\n|      1 | spark.sql.sources.provider        | parquet                                                                                                                                                                                                                                                                                                                                                                                                                                |\n|      1 | spark.sql.sources.schema.numParts | 1                                                                                                                                                                                                                                                                                                                                                                                                                                      |\n|      1 | spark.sql.sources.schema.part.0   | {\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"created\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}},{\"name\":\"updated\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}},{\"name\":\"first_name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"last_name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"email\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]} |\n|      1 | totalSize                         | 1721                                                                                                                                                                                                                                                                                                                                                                                                                                   |\n|      1 | transient_lastDdlTime             | 1614132850                                                                                                                                                                                                                                                                                                                                                                                                                             |\n+--------+-----------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+\n7 rows in set (0.00 sec)\n~~~\n\n~~~\nmysql\u003e select * from COLUMNS_V2;\n+-------+-----------------------------------+-------------+-----------+-------------+\n| CD_ID | COMMENT                           | COLUMN_NAME | TYPE_NAME | INTEGER_IDX |\n+-------+-----------------------------------+-------------+-----------+-------------+\n|     4 | NULL                              | created     | timestamp |           1 |\n|     4 | Not to be used for Marketing      | email       | string    |           5 |\n|     4 | Our Friendly Customers First Name | first_name  | string    |           3 |\n|     4 | NULL                              | id          | string    |           0 |\n|     4 | Our Customers Last Name           | last_name   | string    |           4 |\n|     4 | NULL                              | updated     | timestamp |           2 |\n+-------+-----------------------------------+-------------+-----------+-------------+\n6 rows in set (0.00 sec)\n~~~\n\nGet the Location of the Warehouse for the Table\n~~~\nSELECT DISTINCT B.TBL_ID AS TABLE_ID, \nB.TBL_NAME AS TABLE_NAME, \nA.LOCATION AS HDFS_PATH\nFROM SDS A, TBLS B\nWHERE A.SD_ID\u003dB.SD_ID;\n~~~\n~~~\n+----------+----------------+------------------------------------------+\n| TABLE_ID | TABLE_NAME     | HDFS_PATH                                |\n+----------+----------------+------------------------------------------+\n|        1 | hive_customers | file:/spark/sql/warehouse/hive_customers |\n+----------+----------------+------------------------------------------+\n~~~",
       "user": "anonymous",
       "dateUpdated": "2021-02-25 23:41:36.838",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -908,6 +931,7 @@
       "text": "%spark\n\nval details \u003d sparkSessionHive.read\n  .format(\"jdbc\")\n  .option(\"url\", \"jdbc:mysql://mysql:3306/default\")\n  .option(\"driver\", \"org.mariadb.jdbc.Driver\")\n  .option(\"query\", \"select * from metastore.`TABLE_PARAMS`\")\n  .option(\"user\", \"dataeng\")\n  .option(\"password\", \"dataengineering_user\")\n  .load()\n\ndetails.createOrReplaceTempView(\"metadata\")\n\n\n",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:29:48.331",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -948,6 +972,7 @@
       "text": "%sql\nselect * from metadata",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:29:51.402",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1032,6 +1057,7 @@
       "text": "%spark\nsparkSessionHive.catalog.listTables.show",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:30:04.655",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1074,6 +1100,7 @@
       "text": "%spark\nsparkSessionHive.catalog.listDatabases.show(false)",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:30:10.851",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1115,6 +1142,7 @@
       "text": "%md\n## Table and Column Level Annotations\n\n### Table Level Comments\n~~~sql\nALTER TABLE hive_customers SET TBLPROPERTIES (\u0027comment\u0027 \u003d \u0027Loyal patrons of CoffeeCo\u0027)\n~~~\n\n### Column Level Comments\n~~~sql\nALTER TABLE hive_customers ALTER COLUMN first_name COMMENT \"Our Friendly Customers First Name\";\n~~~\n\n[Useful Databricks Reference](https://docs.databricks.com/spark/latest/spark-sql/language-manual/sql-ref-syntax-ddl-alter-table.html)",
       "user": "anonymous",
       "dateUpdated": "2021-02-25 23:50:29.954",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1158,6 +1186,7 @@
       "text": "%sql\nALTER TABLE hive_customers SET TBLPROPERTIES (\u0027comment\u0027 \u003d \u0027Loyal patrons of CoffeeCo\u0027)",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:30:16.262",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1194,6 +1223,7 @@
       "text": "%spark\nsparkSessionHive.catalog.listTables().show(truncate\u003dfalse)\n",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:30:19.198",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1235,6 +1265,7 @@
       "text": "%sql\nALTER TABLE hive_customers ALTER COLUMN first_name COMMENT \"Our Friendly Customers First Name\";\nALTER TABLE hive_customers ALTER COLUMN last_name COMMENT \"Our Customers Last Name\";\nALTER TABLE hive_customers ALTER COLUMN email COMMENT \"Not to be used for Marketing\";",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:30:29.317",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1271,6 +1302,7 @@
       "text": "%spark\nsparkSessionHive.sql(\"desc hive_customers\").show(truncate\u003dfalse)",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:30:33.251",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1312,6 +1344,7 @@
       "text": "%sql\nANALYZE TABLE hive_customers COMPUTE STATISTICS FOR COLUMNS id, first_name, last_name, email",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:30:37.520",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1362,6 +1395,7 @@
       "text": "%sql\nDESCRIBE EXTENDED hive_customers",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:30:42.888",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1434,6 +1468,7 @@
       "text": "%spark\nspark.sql(\"describe extended hive_customers id\").show(truncate\u003dfalse)",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:30:47.839",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1475,6 +1510,7 @@
       "text": "%sh\n\nls -l /spark/sql/warehouse/hive_customers/\n\n",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:30:56.429",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1516,6 +1552,7 @@
       "text": "%spark\nval tableExists \u003d spark.catalog.tableExists(\"hive_customers\")\nval tableIsCached \u003d spark.catalog.isCached(\"hive_customers\")\nspark.catalog.cacheTable(\"hive_customers\")",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:31:01.960",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1558,6 +1595,7 @@
       "text": "%spark\nif (!tableIsCached) {\n  spark.catalog.cacheTable(\"hive_customers\")    \n}\nspark.catalog.isCached(\"hive_customers\")",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:31:10.297",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1600,6 +1638,7 @@
       "text": "%spark\nspark.catalog.uncacheTable(\"hive_customers\")",
       "user": "anonymous",
       "dateUpdated": "2021-02-25 02:35:57.347",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1637,6 +1676,7 @@
       "text": "%spark\nspark.catalog.clearCache",
       "user": "anonymous",
       "dateUpdated": "2021-02-25 02:36:15.506",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1673,6 +1713,7 @@
       "text": "%md\n## Removing a Table\nIf you want to remove a table from the hive metastore. All you have to do is use the DROP TABLE command. This will remove everything from the warehouse so **BE CAREFUL**. Always create a backup of a Table before doing this in the real world. There is no *undo*!\n\n**Spark SQLContext**\n~~~\nspark.sql(\"DROP TABLE hive_customers\")\n~~~\n\n**Spark SQL: Interpreted**\n~~~\nspark.sql(\"drop table if exists hive_customers\").show\n~~~\n\n**Spark SQL: Via Catalyst Session Catalog**\n~~~\nimport org.apache.spark.sql.catalyst.TableIdentifier\n\nval sessionCatalog \u003d spark.sessionState.catalog\nval tableName \u003d \"hive_customers\"\nval tableId \u003d TableIdentifier(tableName)\nval warehousePath \u003d sessionCatalog.defaultTablePath(tableId)\n// drop the table using the DSL\nsessionCatalog.dropTable(tableId)\n~~~\n",
       "user": "anonymous",
       "dateUpdated": "2021-02-25 23:44:26.647",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1715,6 +1756,7 @@
       "text": "%spark\nimport org.apache.spark.sql.catalyst.TableIdentifier\n\nval sessionCatalog \u003d spark.sessionState.catalog\nval tableName \u003d \"hive_customers\"\nval tableId \u003d TableIdentifier(tableName)\nval warehousePath \u003d sessionCatalog.defaultTablePath(tableId)\n// drop the table using the DSL - uncomment to try this yourself - it will also remove all the metadata you added\n//sessionCatalog.dropTable(tableId,ignoreIfNotExists\u003dtrue,purge\u003dfalse)\n",
       "user": "anonymous",
       "dateUpdated": "2021-03-13 21:31:25.955",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1756,6 +1798,7 @@
       "text": "%sql\n/*DROP TABLE IF EXISTS hive_customers;*/",
       "user": "anonymous",
       "dateUpdated": "2021-02-25 02:37:44.294",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
