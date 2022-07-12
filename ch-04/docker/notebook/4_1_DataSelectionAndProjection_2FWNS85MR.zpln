@@ -2,9 +2,10 @@
   "paragraphs": [
     {
       "title": "Data Generation",
-      "text": "%spark\nimport org.apache.spark.sql.functions._\n\ncase class Store(\n    name: String, \n    capacity: Int, \n    opens: Int, \n    closes: Int)\n    \nval stores \u003d Seq(\n    Store(\"a\", 24, 8, 20),\n    Store(\"b\", 36, 7, 21),\n    Store(\"c\", 18, 5, 23)\n)\n\nval df \u003d spark.createDataFrame(stores)\ndf.createOrReplaceTempView(\"stores\")",
+      "text": "%spark\n\n// CoffeeCo is small and fortunately for us there are only a few main stores. To begin we’ll prime a temporary SQL view called stores to represent our company’s flagship stores.\nimport org.apache.spark.sql.functions._\n\ncase class Store(\n    name: String, \n    capacity: Int, \n    opens: Int, \n    closes: Int)\n    \nval stores \u003d Seq(\n    Store(\"a\", 24, 8, 20),\n    Store(\"b\", 36, 7, 21),\n    Store(\"c\", 18, 5, 23)\n)\n\nval df \u003d spark.createDataFrame(stores)\ndf.createOrReplaceTempView(\"stores\")",
       "user": "anonymous",
-      "dateUpdated": "2021-01-31 21:58:28.037",
+      "dateUpdated": "2022-07-12 13:45:06.469",
+      "progress": 0,
       "config": {
         "editorSetting": {
           "language": "scala",
@@ -38,14 +39,345 @@
       "jobName": "paragraph_1612130230142_1133059849",
       "id": "paragraph_1612037491392_1831291883",
       "dateCreated": "2021-01-31 21:57:10.142",
-      "dateStarted": "2021-01-31 21:58:28.048",
-      "dateFinished": "2021-01-31 21:58:28.348",
+      "dateStarted": "2022-07-12 13:36:26.109",
+      "dateFinished": "2022-07-12 13:36:27.540",
+      "status": "FINISHED"
+    },
+    {
+      "title": "Confirm Creation of Data",
+      "text": "%spark\n\n// Output of the previous paragraph.\n\nval dataconf \u003d spark.sql(\"select * from stores\")\ndataconf.show()",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 14:01:12.299",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----+--------+-----+------+\n|name|capacity|opens|closes|\n+----+--------+-----+------+\n|   a|      24|    8|    20|\n|   b|      36|    7|    21|\n|   c|      18|    5|    23|\n+----+--------+-----+------+\n\n\u001b[1m\u001b[34mdataconf\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [name: string, capacity: int ... 2 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657633508115_1058346614",
+      "id": "paragraph_1657633508115_1058346614",
+      "dateCreated": "2022-07-12 13:45:08.115",
+      "dateStarted": "2022-07-12 13:46:00.780",
+      "dateFinished": "2022-07-12 13:46:00.964",
+      "status": "FINISHED"
+    },
+    {
+      "title": "Selection",
+      "text": "%spark\n\n// The process of selection is arguably the most fundamental means of reducing the footprint of the data you are working with. \n//This concept will be familiar to anyone with working knowledge of SQL.\n//In a nutshell, selection enables us to reduce the set of rows returned by a query by way of a condition.\n// Say we wanted to find all the stores open on or after a specific time of day.\n// Returning Only the Rows that Match the Condition closes \u003e\u003d 22 via Simple Selection.\n\nval q \u003d spark.sql(\"select * from stores where closes \u003e\u003d 22\")\nq.show()",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 13:38:23.417",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----+--------+-----+------+\n|name|capacity|opens|closes|\n+----+--------+-----+------+\n|   c|      18|    5|    23|\n+----+--------+-----+------+\n\n\u001b[1m\u001b[34mq\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [name: string, capacity: int ... 2 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657633002983_300876920",
+      "id": "paragraph_1657633002983_300876920",
+      "dateCreated": "2022-07-12 13:36:42.983",
+      "dateStarted": "2022-07-12 13:37:58.581",
+      "dateFinished": "2022-07-12 13:38:00.645",
+      "status": "FINISHED"
+    },
+    {
+      "title": "Filtering ",
+      "text": "%spark\n\n// If the selection process feels to you a little like filtering, you’d be right. \n// In fact, if you take a look at answering the same question using DataFrames,\n// you’ll see that we can use the filter or where function interchangeably.\n// The where Clause Is Interchangable with the filter Function of the DataFrame\n\nimport org.apache.spark.sql.functions._\nimport spark.implicits._\nval filter \u003d df.filter($\"closes\" \u003e\u003d 22)\nval where \u003d df.where(\u0027closes \u003e\u003d 22)\nfilter.show()\nwhere.show()",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 13:43:17.064",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----+--------+-----+------+\n|name|capacity|opens|closes|\n+----+--------+-----+------+\n|   c|      18|    5|    23|\n+----+--------+-----+------+\n\n+----+--------+-----+------+\n|name|capacity|opens|closes|\n+----+--------+-----+------+\n|   c|      18|    5|    23|\n+----+--------+-----+------+\n\nimport org.apache.spark.sql.functions._\nimport spark.implicits._\n\u001b[1m\u001b[34mfilter\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m \u003d [name: string, capacity: int ... 2 more fields]\n\u001b[1m\u001b[34mwhere\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m \u003d [name: string, capacity: int ... 2 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657633111645_720393796",
+      "id": "paragraph_1657633111645_720393796",
+      "dateCreated": "2022-07-12 13:38:31.645",
+      "dateStarted": "2022-07-12 13:43:17.068",
+      "dateFinished": "2022-07-12 13:43:20.187",
+      "status": "FINISHED"
+    },
+    {
+      "title": "Filtering ",
+      "text": "%spark\n\n// If the selection process feels to you a little like filtering, you’d be right. \n// In fact, if you take a look at answering the same question using DataFrames,\n// you’ll see that we can use the filter or where function interchangeably.\n// The where Clause Is Interchangable with the filter Function of the DataFrame\n\nimport org.apache.spark.sql.functions._\nimport spark.implicits._\nval filter \u003d df.filter($\"closes\" \u003e\u003d 22)\nval where \u003d df.where(\u0027closes \u003e\u003d 22)\nfilter.show()\nwhere.show()",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 13:43:46.938",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657633426935_155055481",
+      "id": "paragraph_1657633426935_155055481",
+      "dateCreated": "2022-07-12 13:43:46.936",
+      "status": "READY"
+    },
+    {
+      "title": "Projection",
+      "text": "%spark\n\n// Projection as the process of reducing the total number of columns returned by a query. \n\n// Say we want to find all stores where the minimum occupancy is greater than 20. \n// In this case, we can assume we don’t need to worry about when a store opens or closes,\n// but rather we want to find the name of the store only.\n\n\n// find all stores with an occupancy greater than 20\nval pq \u003d spark.sql(\n\"select name from stores where capacity \u003e 20\") \npq.show()",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 13:52:51.251",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----+\n|name|\n+----+\n|   a|\n|   b|\n+----+\n\n\u001b[1m\u001b[34mpq\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [name: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657633596743_832690609",
+      "id": "paragraph_1657633596743_832690609",
+      "dateCreated": "2022-07-12 13:46:36.743",
+      "dateStarted": "2022-07-12 13:52:51.254",
+      "dateFinished": "2022-07-12 13:52:51.468",
+      "status": "FINISHED"
+    },
+    {
+      "title": "Joins ",
+      "text": "%spark\n\n// More likely, you will have to stitch data from a \n// few different sources together in order to create the data representation needed to solve the problem at hand.\n\n// strategically combine and transform multiple sources of data into a single consolidated\n// view that can be used to answer more targeted problems\n\n// for the purposes of this exercise, we will be generating the occupancy data in a way that can also showcase the different common join styles available within spark.\n\n// When joining data, we commonly use one or more columns that can act as a join key (or selection expression) between the two datasets we want to combine. In this case, we will be using the coffee store name as our common key.\n",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 14:00:02.887",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657634115616_1966978592",
+      "id": "paragraph_1657634115616_1966978592",
+      "dateCreated": "2022-07-12 13:55:15.616",
+      "status": "READY"
+    },
+    {
+      "title": "Expanding Data Through Joins: Data Generation.",
+      "text": "%spark\n\n// Generating the Occupancy View for Our Joins.\n\ncase class StoreOccupants(storename: String, occupants: Int)\nval occupants \u003d Seq(\n  StoreOccupants(\"a\", 8),\n  StoreOccupants(\"b\", 20),\n  StoreOccupants(\"c\", 16),\n  StoreOccupants(\"d\", 55),\n  StoreOccupants(\"e\", 8)\n)\nval occupancy \u003d spark.createDataFrame(occupants)\noccupancy.createOrReplaceTempView(\"store_occupants\")\n",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 14:00:44.935",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class StoreOccupants\n\u001b[1m\u001b[34moccupants\u001b[0m: \u001b[1m\u001b[32mSeq[StoreOccupants]\u001b[0m \u003d List(StoreOccupants(a,8), StoreOccupants(b,20), StoreOccupants(c,16), StoreOccupants(d,55), StoreOccupants(e,8))\n\u001b[1m\u001b[34moccupancy\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [storename: string, occupants: int]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657634371677_1268831767",
+      "id": "paragraph_1657634371677_1268831767",
+      "dateCreated": "2022-07-12 13:59:31.677",
+      "dateStarted": "2022-07-12 14:00:44.938",
+      "dateFinished": "2022-07-12 14:00:45.332",
+      "status": "FINISHED"
+    },
+    {
+      "title": "Confirm Creation of Data",
+      "text": "%spark\n\n// Output of the previous paragraph.\n\nval dataconf2 \u003d spark.sql(\"select * from store_occupants\")\ndataconf2.show()",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 14:01:54.255",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+---------+\n|storename|occupants|\n+---------+---------+\n|        a|        8|\n|        b|       20|\n|        c|       16|\n|        d|       55|\n|        e|        8|\n+---------+---------+\n\n\u001b[1m\u001b[34mdataconf2\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [storename: string, occupants: int]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657634481129_1740395474",
+      "id": "paragraph_1657634481129_1740395474",
+      "dateCreated": "2022-07-12 14:01:21.129",
+      "dateStarted": "2022-07-12 14:01:54.258",
+      "dateFinished": "2022-07-12 14:01:54.541",
       "status": "FINISHED"
     },
     {
       "text": "%spark\n",
       "user": "anonymous",
-      "dateUpdated": "2021-01-31 21:57:10.145",
+      "dateUpdated": "2022-07-12 14:01:54.257",
+      "progress": 0,
       "config": {},
       "settings": {
         "params": {},
@@ -54,13 +386,13 @@
       "apps": [],
       "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
-      "jobName": "paragraph_1612130230145_326211536",
-      "id": "paragraph_1612128941610_339683865",
-      "dateCreated": "2021-01-31 21:57:10.145",
+      "jobName": "paragraph_1657634514257_1466081382",
+      "id": "paragraph_1657634514257_1466081382",
+      "dateCreated": "2022-07-12 14:01:54.257",
       "status": "READY"
     }
   ],
-  "name": "4_1_DataSelectionAndProjection-Start",
+  "name": "4_1_DataSelectionAndProjection",
   "id": "2FWNS85MR",
   "defaultInterpreterGroup": "spark",
   "version": "0.9.0-preview2",

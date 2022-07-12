@@ -4,6 +4,7 @@
       "text": "%md\n## Data Inception: Using Spark to help Spark\nIn this following notebook, we will learn to use Spark to help us work more efficiently.\n",
       "user": "anonymous",
       "dateUpdated": "2021-01-31 19:52:44.840",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -43,10 +44,47 @@
       "status": "FINISHED"
     },
     {
+      "text": "%spark\n// Let’s officially begin the chapter exercises with the goal in mind to learn how\n// Apache Zeppelin can be used to speed up the process of Apache Spark exploration and experimentation.\n// You learn to use the CSV DataFrameReader\n",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 13:14:35.923",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657631336753_1797329056",
+      "id": "paragraph_1657631336753_1797329056",
+      "dateCreated": "2022-07-12 13:08:56.753",
+      "dateStarted": "2022-07-12 13:14:35.930",
+      "dateFinished": "2022-07-12 13:14:36.346",
+      "status": "FINISHED"
+    },
+    {
       "title": "Read as CSV",
       "text": "%spark\n\n// load the same file from the IntroToSparkOnZeppelin \nval coffees \u003d spark.read.csv(\"file:///learn/raw-coffee.txt\").toDF(\"name\",\"roast\")\ncoffees.show()",
       "user": "anonymous",
-      "dateUpdated": "2021-01-31 19:52:44.964",
+      "dateUpdated": "2022-07-12 13:22:56.015",
+      "progress": 100,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -83,10 +121,10 @@
           "group": "spark",
           "values": [
             {
-              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d0"
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d3"
             },
             {
-              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d1"
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d4"
             }
           ],
           "interpreterSettingId": "spark"
@@ -96,9 +134,661 @@
       "jobName": "paragraph_1610923180042_1100920629",
       "id": "paragraph_1610923180042_1100920629",
       "dateCreated": "2021-01-17 22:39:40.043",
-      "dateStarted": "2021-01-31 19:52:44.976",
-      "dateFinished": "2021-01-31 19:52:50.447",
+      "dateStarted": "2022-07-12 13:15:16.626",
+      "dateFinished": "2022-07-12 13:15:17.381",
       "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n// Schema Issue\n// roast should be double\ncoffees.printSchema\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 13:17:52.008",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- name: string (nullable \u003d true)\n |-- roast: string (nullable \u003d true)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657631675925_838508749",
+      "id": "paragraph_1657631675925_838508749",
+      "dateCreated": "2022-07-12 13:14:35.925",
+      "dateStarted": "2022-07-12 13:15:56.162",
+      "dateFinished": "2022-07-12 13:15:56.547",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n// Setting the inferSchema Option on the DataFrameReader\n// By adding the optional configuration, you can now unleash \n//the power of the Spark engine to infer (test and generate) schemas automatically.\n\nval coffeeAndSchema \u003d spark.read\n.option(\"inferSchema\", true) .csv(\"file:///learn/raw-coffee.txt\") .toDF(\"name\",\"roast\")\n\n\ncoffeeAndSchema.printSchema\n",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 13:17:21.502",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- name: string (nullable \u003d true)\n |-- roast: double (nullable \u003d true)\n\n\u001b[1m\u001b[34mcoffeeAndSchema\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [name: string, roast: double]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d5"
+            },
+            {
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d6"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657631756160_1421147538",
+      "id": "paragraph_1657631756160_1421147538",
+      "dateCreated": "2022-07-12 13:15:56.160",
+      "dateStarted": "2022-07-12 13:17:21.505",
+      "dateFinished": "2022-07-12 13:17:22.689",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n// Using Declared Schemas \n// When working with critical datasets, using strict schemas enables you to ignore (skip) corrupt data, or to fail fast and kick back an exception, when encountering data that doesn’t conform or parse correctly.\n// Export an Inferred Schema Using the DDL Method on a DataFrame\n\nimport org.apache.spark.sql.types._\n// steal the schema\nval coffeeSchema: StructType \u003d coffeeAndSchema.schema\nval coffeeSchemaDDL: String \u003d coffeeSchema.toDDL\n",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 13:19:36.274",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql.types._\n\u001b[1m\u001b[34mcoffeeSchema\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.types.StructType\u001b[0m \u003d StructType(StructField(name,StringType,true), StructField(roast,DoubleType,true))\n\u001b[1m\u001b[34mcoffeeSchemaDDL\u001b[0m: \u001b[1m\u001b[32mString\u001b[0m \u003d `name` STRING,`roast` DOUBLE\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657631841504_619425319",
+      "id": "paragraph_1657631841504_619425319",
+      "dateCreated": "2022-07-12 13:17:21.504",
+      "dateStarted": "2022-07-12 13:19:36.277",
+      "dateFinished": "2022-07-12 13:19:36.471",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n// create an explicit schema (from the stolen schema)\nval coffeeDDLStruct: StructType \u003d StructType.fromDDL(coffeeSchemaDDL)\n",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 13:19:48.740",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mcoffeeDDLStruct\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.types.StructType\u001b[0m \u003d StructType(StructField(name,StringType,true), StructField(roast,DoubleType,true))\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657631976276_1742459368",
+      "id": "paragraph_1657631976276_1742459368",
+      "dateCreated": "2022-07-12 13:19:36.276",
+      "dateStarted": "2022-07-12 13:19:48.743",
+      "dateFinished": "2022-07-12 13:19:49.202",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n// read the coffee csv using the stolen schema directly\nval coffees \u003d spark.read\n  .option(\"inferSchema\", false)\n  .schema(coffeeDDLStruct)\n  .csv(\"file:///learn/raw-coffee.txt\")",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 13:20:05.410",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mcoffees\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [name: string, roast: double]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657631988742_1598792238",
+      "id": "paragraph_1657631988742_1598792238",
+      "dateCreated": "2022-07-12 13:19:48.742",
+      "dateStarted": "2022-07-12 13:20:05.412",
+      "dateFinished": "2022-07-12 13:20:05.650",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n// The important part is that you can load the DDL string directly into the DataFrameReader, which enables you to by-pass schema inference and ultimately add more explicit strict rules for handling data in your Spark applications.\n\nspark.read\n  .schema(\"`name` STRING,`roast` DOUBLE\")\n  .csv(\"file:///learn/raw-coffee.txt\")",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 13:21:08.980",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mres12\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [name: string, roast: double]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657632005412_1202977576",
+      "id": "paragraph_1657632005412_1202977576",
+      "dateCreated": "2022-07-12 13:20:05.412",
+      "dateStarted": "2022-07-12 13:21:08.983",
+      "dateFinished": "2022-07-12 13:21:09.171",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n// Construct a coffeeSchema StructType to Use Directly When Reading the Coffee Data as a DataFrame.\n\nval coffeeSchema \u003d StructType(\n  Seq(\n    StructField(\"name\", StringType,\n      metadata \u003d new MetadataBuilder()\n        .putString(\"comment\", \"Coffee Brand Name\")\n        .build()),\n    StructField(\"roast\", DoubleType,\n      metadata \u003d new MetadataBuilder()\n        .putString(\"comment\", \"Coffee Roast Level (1-10)\")\n        .build())))",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 13:22:14.243",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mcoffeeSchema\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.types.StructType\u001b[0m \u003d StructType(StructField(name,StringType,true), StructField(roast,DoubleType,true))\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657632068982_757695526",
+      "id": "paragraph_1657632068982_757695526",
+      "dateCreated": "2022-07-12 13:21:08.982",
+      "dateStarted": "2022-07-12 13:22:14.246",
+      "dateFinished": "2022-07-12 13:22:14.725",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\nval coffees \u003d spark.read .option(\"inferSchema\", \"false\") .schema(coffeeSchema) .csv(\"file:///learn/raw-coffee.txt\")",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 13:22:28.742",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mcoffees\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [name: string, roast: double]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657632134245_564521970",
+      "id": "paragraph_1657632134245_564521970",
+      "dateCreated": "2022-07-12 13:22:14.245",
+      "dateStarted": "2022-07-12 13:22:28.744",
+      "dateFinished": "2022-07-12 13:22:28.866",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 13:22:28.744",
+      "progress": 0,
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657632148744_635546705",
+      "id": "paragraph_1657632148744_635546705",
+      "dateCreated": "2022-07-12 13:22:28.744",
+      "status": "READY"
+    },
+    {
+      "title": "Creating SQL Views",
+      "text": "%spark\n\n// Create a SQL View Using  aDataFrame with createOrReplaceTempView\ncoffees.createOrReplaceTempView(\"coffees\") \nspark.sql(\"desc coffees\").show(truncate\u003dfalse)",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 13:28:23.708",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------+---------+-------------------------+\n|col_name|data_type|comment                  |\n+--------+---------+-------------------------+\n|name    |string   |Coffee Brand Name        |\n|roast   |double   |Coffee Roast Level (1-10)|\n+--------+---------+-------------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657632179435_2018707691",
+      "id": "paragraph_1657632179435_2018707691",
+      "dateCreated": "2022-07-12 13:22:59.435",
+      "dateStarted": "2022-07-12 13:24:53.143",
+      "dateFinished": "2022-07-12 13:24:53.729",
+      "status": "FINISHED"
+    },
+    {
+      "title": "Using the SparkSQL Zepplin Interpreter",
+      "text": "%sql\n\n--Using the Spark SQL Interpreter in Apache Zeppelin\nselect * from coffees;",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 13:26:56.102",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sql",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "name": "string",
+                      "roast": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "name\troast\nfolgers\t10.0\nyuban\t10.0\nnespresso\t10.0\nritual\t4.0\nfour barrel\t5.0\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d7"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657632341221_237915955",
+      "id": "paragraph_1657632341221_237915955",
+      "dateCreated": "2022-07-12 13:25:41.221",
+      "dateStarted": "2022-07-12 13:26:33.711",
+      "dateFinished": "2022-07-12 13:26:34.044",
+      "status": "FINISHED"
+    },
+    {
+      "title": "Using the SparkSQL Zepplin Interpreter",
+      "text": "%sql\n\n--Using the Spark SQL Interpreter in Apache Zeppelin\nselect avg(roast) as avg_roast from coffees;",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 13:28:15.882",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sql",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "avg_roast": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "avg_roast\n7.8\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d9"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657632481547_805698188",
+      "id": "paragraph_1657632481547_805698188",
+      "dateCreated": "2022-07-12 13:28:01.547",
+      "dateStarted": "2022-07-12 13:28:15.410",
+      "dateFinished": "2022-07-12 13:28:15.630",
+      "status": "FINISHED"
+    },
+    {
+      "title": "Computing Averages",
+      "text": "%spark\n\n// The task of computing an average is straightforward with Spark SQL (and SQL). You need to simply call the avg expression on a column.\n\nspark.sql(\"select avg(roast) as avg_roast from coffees\").show",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 13:29:01.909",
+      "progress": 100,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+\n|avg_roast|\n+---------+\n|      7.8|\n+---------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d10"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657632505142_1511769172",
+      "id": "paragraph_1657632505142_1511769172",
+      "dateCreated": "2022-07-12 13:28:25.142",
+      "dateStarted": "2022-07-12 13:29:01.911",
+      "dateFinished": "2022-07-12 13:29:02.430",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-12 13:24:53.139",
+      "progress": 0,
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1657632293139_2096815333",
+      "id": "paragraph_1657632293139_2096815333",
+      "dateCreated": "2022-07-12 13:24:53.139",
+      "status": "READY"
     }
   ],
   "name": "3-2_LetSparkWorkForYou",
@@ -111,7 +801,5 @@
   "config": {
     "isZeppelinNotebookCronEnable": false
   },
-  "info": {
-    "isRunning": false
-  }
+  "info": {}
 }

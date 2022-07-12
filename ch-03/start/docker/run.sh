@@ -34,7 +34,7 @@ function start() {
   # there is an expectation that $SPARK_HOME and $JAVA_HOME are both available to the session
   sparkExists
   createNetwork
-  docker-compose -f ${DOCKER_COMPOSE_FILE} up -d --remove-orphans zeppelin
+  docker-compose -f ${DOCKER_COMPOSE_FILE} up --build -d --remove-orphans zeppelin
   echo "Zeppelin will be running on http://127.0.0.1:8080"
 }
 
