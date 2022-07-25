@@ -46,7 +46,7 @@
     {
       "text": "%spark\nspark.sparkContext.getConf.toDebugString",
       "user": "anonymous",
-      "dateUpdated": "2022-07-25 11:52:20.887",
+      "dateUpdated": "2022-07-25 12:31:55.084",
       "progress": 0,
       "config": {
         "editorSetting": {
@@ -78,7 +78,7 @@
         "msg": [
           {
             "type": "TEXT",
-            "data": "\u001b[1m\u001b[34mres1\u001b[0m: \u001b[1m\u001b[32mString\u001b[0m \u003d\nPYSPARK_DRIVER_PYTHON\u003dpython\nPYSPARK_PYTHON\u003dpython\nSPARK_HOME\u003d/spark/spark-3.0.1-bin-hadoop3.2\nspark.app.id\u003dlocal-1658749950873\nspark.app.name\u003dspark-shared_process\nspark.driver.cores\u003d1\nspark.driver.extraClassPath\u003d:/opt/zeppelin/interpreter/spark/*:::/opt/zeppelin/interpreter/zeppelin-interpreter-shaded-0.9.0.jar:/opt/zeppelin/interpreter/spark/spark-interpreter-0.9.0.jar\nspark.driver.extraJavaOptions\u003d -Dfile.encoding\u003dUTF-8 -Dlog4j.configuration\u003dfile:///opt/zeppelin/conf/log4j.properties -Dlog4j.configurationFile\u003dfile:///opt/zeppelin/conf/log4j2.properties -Dzeppelin.log.file\u003d/logs/zeppelin-interpreter-spark-shared_process--zeppelin.log\nspark.driver.host\u003dzeppelin\nspark.driver.memory\u003d1g\nspark.driver.port\u003d43083\nspark.executor.cores\u003d1\nspark.executor....\n"
+            "data": "\u001b[1m\u001b[34mres1\u001b[0m: \u001b[1m\u001b[32mString\u001b[0m \u003d\nPYSPARK_DRIVER_PYTHON\u003dpython\nPYSPARK_PYTHON\u003dpython\nSPARK_HOME\u003d/spark/spark-3.0.1-bin-hadoop3.2\nspark.app.id\u003dlocal-1658752326515\nspark.app.name\u003dspark-shared_process\nspark.driver.cores\u003d1\nspark.driver.extraClassPath\u003d:/opt/zeppelin/interpreter/spark/*:::/opt/zeppelin/interpreter/zeppelin-interpreter-shaded-0.9.0.jar:/opt/zeppelin/interpreter/spark/spark-interpreter-0.9.0.jar\nspark.driver.extraJavaOptions\u003d -Dfile.encoding\u003dUTF-8 -Dlog4j.configuration\u003dfile:///opt/zeppelin/conf/log4j.properties -Dlog4j.configurationFile\u003dfile:///opt/zeppelin/conf/log4j2.properties -Dzeppelin.log.file\u003d/logs/zeppelin-interpreter-spark-shared_process--zeppelin.log\nspark.driver.host\u003dzeppelin\nspark.driver.memory\u003d1g\nspark.driver.port\u003d46621\nspark.executor.cores\u003d1\nspark.executor....\n"
           }
         ]
       },
@@ -88,14 +88,14 @@
       "jobName": "paragraph_1657636701609_488869126",
       "id": "paragraph_1657636701609_488869126",
       "dateCreated": "2022-07-12 14:38:21.609",
-      "dateStarted": "2022-07-25 11:52:20.905",
-      "dateFinished": "2022-07-25 11:52:34.387",
+      "dateStarted": "2022-07-25 12:31:55.102",
+      "dateFinished": "2022-07-25 12:32:13.033",
       "status": "FINISHED"
     },
     {
-      "text": "%spark\n// Importing package\nimport org.apache.spark.sql.{SaveMode, SparkSession}",
+      "text": "%spark\n\nimport org.apache.spark.sql.{SaveMode, SparkSession}\n\n\n\nobject CsvToAvroParquetJson extends App {\n\n  val spark: SparkSession \u003d SparkSession.builder()\n    .master(\"local[1]\")\n    .appName(\"SparkByExample\")\n    .getOrCreate()\n\n  spark.sparkContext.setLogLevel(\"ERROR\")\n\n  //read csv with options\n  val df \u003d spark.read.options(Map(\"inferSchema\"-\u003e\"true\",\"delimiter\"-\u003e\",\",\"header\"-\u003e\"true\"))\n    .text(\"/spark/sql/ecomm_orders.txt\")\n  df.show()\n  df.printSchema()\n\n  //convert to avro\n  df.write.format(\"avro\").mode(SaveMode.Overwrite)\n    .save(\"/tmp/avro/zipcodes.avro\")\n\n\n\n  //convert to parquet\n  df.write.mode(SaveMode.Overwrite).parquet(\"/spark/sql/ecomm_orders.parquet\")\n\n  //convert to json\n  df.write.mode(SaveMode.Overwrite).json(\"/spark/sql/ecomm_orderss.json\")\n}\n\n",
       "user": "anonymous",
-      "dateUpdated": "2022-07-25 11:52:56.214",
+      "dateUpdated": "2022-07-25 13:07:40.588",
       "progress": 0,
       "config": {
         "editorSetting": {
@@ -119,18 +119,18 @@
         "msg": [
           {
             "type": "TEXT",
-            "data": "import org.apache.spark.sql.{SaveMode, SparkSession}\n"
+            "data": "import org.apache.spark.sql.{SaveMode, SparkSession}\ndefined object CsvToAvroParquetJson\n"
           }
         ]
       },
       "apps": [],
       "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
-      "jobName": "paragraph_1658749964229_1737432125",
-      "id": "paragraph_1658749964229_1737432125",
-      "dateCreated": "2022-07-25 11:52:44.229",
-      "dateStarted": "2022-07-25 11:52:56.218",
-      "dateFinished": "2022-07-25 11:52:56.347",
+      "jobName": "paragraph_1658754323377_1924889864",
+      "id": "paragraph_1658754323377_1924889864",
+      "dateCreated": "2022-07-25 13:05:23.377",
+      "dateStarted": "2022-07-25 13:07:40.592",
+      "dateFinished": "2022-07-25 13:07:41.371",
       "status": "FINISHED"
     },
     {
@@ -193,11 +193,267 @@
       "status": "READY"
     },
     {
+      "text": "%spark\nval df2 \u003d spark.read.option(\"lineSep\", \",\").text(path)\ndf2.show()\ndf2.printSchema()\n\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-25 13:00:06.970",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------------+\n|               value|\n+--------------------+\n|     [ {\"id\": \"3001\"|\n| \"eventType\": \"re...|\n| \"subject\": \"ecom...|\n| \"eventTime\": \"20...|\n| \"data\":{ \"custom...|\n| \"address\": \"Ap #...|\n|  \"city\": \"Billings\"|\n|\"postalcode\": \"80...|\n|    \"country\": \"USA\"|\n|\"phone\": \"1-528-8...|\n|\"email\": \"Donec.f...|\n|\"product_name\": \"...|\n|\"order_date\": \"18...|\n|   \"currency\": \"EUR\"|\n| \"order_mode\": \"NEW\"|\n|\"sale_price\": \"32...|\n|\"order_number\": \"...|\n|\"dataVersion\": \"1...|\n| \"eventType\": \"re...|\n| \"subject\": \"ecom...|\n+--------------------+\nonly showing top 20 rows\n\nroot\n |-- value: string (nullable \u003d true)\n\n\u001b[1m\u001b[34mdf2\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [value: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d7"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1658753958126_197836082",
+      "id": "paragraph_1658753958126_197836082",
+      "dateCreated": "2022-07-25 12:59:18.126",
+      "dateStarted": "2022-07-25 13:00:06.973",
+      "dateFinished": "2022-07-25 13:00:07.275",
+      "status": "FINISHED"
+    },
+    {
       "text": "%spark\n",
       "user": "anonymous",
-      "dateUpdated": "2022-07-25 11:52:59.930",
+      "dateUpdated": "2022-07-25 13:00:05.703",
       "progress": 0,
-      "config": {},
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- value: string (nullable \u003d true)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1658753989297_674711428",
+      "id": "paragraph_1658753989297_674711428",
+      "dateCreated": "2022-07-25 12:59:49.297",
+      "dateStarted": "2022-07-25 13:00:00.242",
+      "dateFinished": "2022-07-25 13:00:00.437",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\nval path \u003d \"/spark/sql/ecomm_orders.txt\"\n\nval df1 \u003d spark.read.text(path)\ndf1.show()",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-25 12:58:35.509",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------------+\n|               value|\n+--------------------+\n|[ {\"id\": \"3001\", ...|\n|[ {\"id\": \"3002\", ...|\n|[ {\"id\": \"3003\", ...|\n|[ {\"id\": \"3004\", ...|\n|[ {\"id\": \"3005\", ...|\n|[ {\"id\": \"3006\", ...|\n|[ {\"id\": \"3007\", ...|\n|[ {\"id\": \"3008\", ...|\n|[ {\"id\": \"3009\", ...|\n|[ {\"id\": \"3010\", ...|\n+--------------------+\n\n\u001b[1m\u001b[34mpath\u001b[0m: \u001b[1m\u001b[32mString\u001b[0m \u003d /spark/sql/ecomm_orders.txt\n\u001b[1m\u001b[34mdf1\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [value: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d4"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1658752684442_5563521",
+      "id": "paragraph_1658752684442_5563521",
+      "dateCreated": "2022-07-25 12:38:04.442",
+      "dateStarted": "2022-07-25 12:58:35.512",
+      "dateFinished": "2022-07-25 12:58:36.052",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n//read csv with options\n  val df \u003d spark.read.options(Map(\"inferSchema\"-\u003e\"true\",\"delimiter\"-\u003e\",\",\"header\"-\u003e\"false\"))\n    .text(\"/spark/sql/ecomm_orders.txt\")\n  df.show()\n  df.printSchema()\n",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-25 12:58:41.878",
+      "progress": 100,
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------------+\n|               value|\n+--------------------+\n|[ {\"id\": \"3001\", ...|\n|[ {\"id\": \"3002\", ...|\n|[ {\"id\": \"3003\", ...|\n|[ {\"id\": \"3004\", ...|\n|[ {\"id\": \"3005\", ...|\n|[ {\"id\": \"3006\", ...|\n|[ {\"id\": \"3007\", ...|\n|[ {\"id\": \"3008\", ...|\n|[ {\"id\": \"3009\", ...|\n|[ {\"id\": \"3010\", ...|\n+--------------------+\n\nroot\n |-- value: string (nullable \u003d true)\n\n\u001b[1m\u001b[34mdf\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [value: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d5"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1658749979930_1182832603",
+      "id": "paragraph_1658749979930_1182832603",
+      "dateCreated": "2022-07-25 11:52:59.930",
+      "dateStarted": "2022-07-25 12:58:41.881",
+      "dateFinished": "2022-07-25 12:58:42.257",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n// Converting CSV to Avro\n df.write.format(\"avro\").save(\"/spark/sql/ecomm_orders.avro\")",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-25 12:41:00.162",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "org.apache.spark.sql.AnalysisException: Failed to find data source: avro. Avro is built-in but external data source module since Spark 2.4. Please deploy the application as per the deployment section of \"Apache Avro Data Source Guide\".;\n  at org.apache.spark.sql.execution.datasources.DataSource$.lookupDataSource(DataSource.scala:666)\n  at org.apache.spark.sql.execution.datasources.DataSource$.lookupDataSourceV2(DataSource.scala:733)\n  at org.apache.spark.sql.DataFrameWriter.lookupV2Provider(DataFrameWriter.scala:967)\n  at org.apache.spark.sql.DataFrameWriter.save(DataFrameWriter.scala:304)\n  at org.apache.spark.sql.DataFrameWriter.save(DataFrameWriter.scala:288)\n  ... 44 elided\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1658752782598_413045428",
+      "id": "paragraph_1658752782598_413045428",
+      "dateCreated": "2022-07-25 12:39:42.598",
+      "dateStarted": "2022-07-25 12:41:00.165",
+      "dateFinished": "2022-07-25 12:41:00.558",
+      "status": "ERROR"
+    },
+    {
+      "text": "%spark\n\npackage com.sparkbyexamples.spark.dataframe\n\nimport org.apache.spark.sql.{SaveMode, SparkSession}\n\nobject CsvToAvroParquetJson extends App {\n\n  val spark: SparkSession \u003d SparkSession.builder()\n    .master(\"local[1]\")\n    .appName(\"SparkByExample\")\n    .getOrCreate()\n\n  spark.sparkContext.setLogLevel(\"ERROR\")\n\n //read csv with options\n  val df \u003d spark.read.options(Map(\"inferSchema\"-\u003e\"true\",\"delimiter\"-\u003e\",\",\"header\"-\u003e\"true\"))\n    .csv(\"src/main/resources/zipcodes.csv\")\n  df.show()\n  df.printSchema()\n\n  //convert to avro\n  df.write.format(\"avro\").mode(SaveMode.Overwrite)\n    .save(\"/tmp/avro/zipcodes.avro\")\n\n\n  //convert to parquet\n  df.write.mode(SaveMode.Overwrite).parquet(\"/tmp/parquet/zipcodes.parquet\")\n\n  //convert to json\n  df.write.mode(SaveMode.Overwrite).json(\"/tmp/json/zipcodes.json\")\n}\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-25 12:42:40.222",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
       "settings": {
         "params": {},
         "forms": {}
@@ -205,17 +461,59 @@
       "apps": [],
       "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
-      "jobName": "paragraph_1658749979930_1182832603",
-      "id": "paragraph_1658749979930_1182832603",
-      "dateCreated": "2022-07-25 11:52:59.930",
+      "jobName": "paragraph_1658752890302_945592754",
+      "id": "paragraph_1658752890302_945592754",
+      "dateCreated": "2022-07-25 12:41:30.302",
       "status": "READY"
     },
     {
-      "text": "%spark\n",
+      "text": "%spark\n//\n\n\n",
       "user": "anonymous",
-      "dateUpdated": "2022-07-25 11:52:58.991",
+      "dateUpdated": "2022-07-25 12:40:45.972",
       "progress": 0,
-      "config": {},
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1658752782065_721658463",
+      "id": "paragraph_1658752782065_721658463",
+      "dateCreated": "2022-07-25 12:39:42.065",
+      "status": "READY"
+    },
+    {
+      "text": "%spark\n dataframe.write.format(\"avro\").mode(SaveMode.Overwrite)\n    .save(\"/tmp/avro/zipcodes.avro\")",
+      "user": "anonymous",
+      "dateUpdated": "2022-07-25 12:40:44.153",
+      "progress": 0,
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
       "settings": {
         "params": {},
         "forms": {}
