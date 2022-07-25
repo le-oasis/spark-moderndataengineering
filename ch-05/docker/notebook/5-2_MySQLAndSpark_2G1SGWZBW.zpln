@@ -46,17 +46,17 @@
     {
       "text": "%spark\nspark.sparkContext.getConf.toDebugString",
       "user": "anonymous",
-      "dateUpdated": "2022-07-12 14:39:24.170",
+      "dateUpdated": "2022-07-25 11:40:41.249",
       "progress": 0,
       "config": {
         "editorSetting": {
-          "language": "text",
+          "language": "scala",
           "editOnDblClick": false,
           "completionKey": "TAB",
           "completionSupport": true
         },
         "colWidth": 12.0,
-        "editorMode": "ace/mode/text",
+        "editorMode": "ace/mode/scala",
         "fontSize": 9.0,
         "results": {
           "0": {
@@ -74,11 +74,11 @@
         "forms": {}
       },
       "results": {
-        "code": "SUCCESS",
+        "code": "ERROR",
         "msg": [
           {
             "type": "TEXT",
-            "data": "\u001b[1m\u001b[34mres4\u001b[0m: \u001b[1m\u001b[32mString\u001b[0m \u003d\nPYSPARK_DRIVER_PYTHON\u003dpython\nPYSPARK_PYTHON\u003dpython\nSPARK_HOME\u003d/spark/spark-3.0.1-bin-hadoop3.2\nspark.app.id\u003dlocal-1657636639771\nspark.app.name\u003dspark-shared_process\nspark.driver.cores\u003d1\nspark.driver.extraClassPath\u003d:/opt/zeppelin/interpreter/spark/*:::/opt/zeppelin/interpreter/zeppelin-interpreter-shaded-0.9.0.jar:/opt/zeppelin/interpreter/spark/spark-interpreter-0.9.0.jar\nspark.driver.extraJavaOptions\u003d -Dfile.encoding\u003dUTF-8 -Dlog4j.configuration\u003dfile:///opt/zeppelin/conf/log4j.properties -Dlog4j.configurationFile\u003dfile:///opt/zeppelin/conf/log4j2.properties -Dzeppelin.log.file\u003d/logs/zeppelin-interpreter-spark-shared_process--zeppelin.log\nspark.driver.host\u003dzeppelin\nspark.driver.memory\u003d1g\nspark.driver.port\u003d38193\nspark.executor.cores\u003d1\nspark.executor....\n"
+            "data": "org.apache.zeppelin.interpreter.InterpreterException: java.io.IOException: Interpreter Process creation is time out in 60 seconds\nYou can increase timeout threshold via setting zeppelin.interpreter.connect.timeout of this interpreter.\nSLF4J: Class path contains multiple SLF4J bindings.\nSLF4J: Found binding in [jar:file:/opt/zeppelin/interpreter/spark/spark-interpreter-0.9.0.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: Found binding in [jar:file:/spark/spark-3.0.1-bin-hadoop3.2/jars/slf4j-log4j12-1.7.30.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.\nSLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]\nIvy Default Cache set to: /root/.ivy2/cache\nThe jars for the packages stored in: /root/.ivy2/jars\n:: loading settings :: url \u003d jar:file:/spark/spark-3.0.1-bin-hadoop3.2/jars/ivy-2.4.0.jar!/org/apache/ivy/core/settings/ivysettings.xml\norg.mariadb.jdbc#mariadb-java-client added as a dependency\n:: resolving dependencies :: org.apache.spark#spark-submit-parent-dc7dfba7-b31f-43fb-ba2f-1e81f1144ee0;1.0\n\tconfs: [default]\n\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.open(RemoteInterpreter.java:129)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.getFormType(RemoteInterpreter.java:271)\n\tat org.apache.zeppelin.notebook.Paragraph.jobRun(Paragraph.java:444)\n\tat org.apache.zeppelin.notebook.Paragraph.jobRun(Paragraph.java:72)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:172)\n\tat org.apache.zeppelin.scheduler.AbstractScheduler.runJob(AbstractScheduler.java:132)\n\tat org.apache.zeppelin.scheduler.RemoteScheduler$JobRunner.run(RemoteScheduler.java:182)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)\n\tat java.lang.Thread.run(Thread.java:748)\nCaused by: java.io.IOException: Interpreter Process creation is time out in 60 seconds\nYou can increase timeout threshold via setting zeppelin.interpreter.connect.timeout of this interpreter.\nSLF4J: Class path contains multiple SLF4J bindings.\nSLF4J: Found binding in [jar:file:/opt/zeppelin/interpreter/spark/spark-interpreter-0.9.0.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: Found binding in [jar:file:/spark/spark-3.0.1-bin-hadoop3.2/jars/slf4j-log4j12-1.7.30.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.\nSLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]\nIvy Default Cache set to: /root/.ivy2/cache\nThe jars for the packages stored in: /root/.ivy2/jars\n:: loading settings :: url \u003d jar:file:/spark/spark-3.0.1-bin-hadoop3.2/jars/ivy-2.4.0.jar!/org/apache/ivy/core/settings/ivysettings.xml\norg.mariadb.jdbc#mariadb-java-client added as a dependency\n:: resolving dependencies :: org.apache.spark#spark-submit-parent-dc7dfba7-b31f-43fb-ba2f-1e81f1144ee0;1.0\n\tconfs: [default]\n\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterManagedProcess.start(RemoteInterpreterManagedProcess.java:121)\n\tat org.apache.zeppelin.interpreter.ManagedInterpreterGroup.getOrCreateInterpreterProcess(ManagedInterpreterGroup.java:68)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.getOrCreateInterpreterProcess(RemoteInterpreter.java:104)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.internal_create(RemoteInterpreter.java:154)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.open(RemoteInterpreter.java:126)\n\t... 13 more\n"
           }
         ]
       },
@@ -88,9 +88,9 @@
       "jobName": "paragraph_1657636701609_488869126",
       "id": "paragraph_1657636701609_488869126",
       "dateCreated": "2022-07-12 14:38:21.609",
-      "dateStarted": "2022-07-12 14:39:14.342",
-      "dateFinished": "2022-07-12 14:39:14.492",
-      "status": "FINISHED"
+      "dateStarted": "2022-07-25 11:40:41.266",
+      "dateFinished": "2022-07-25 11:41:41.332",
+      "status": "ERROR"
     },
     {
       "text": "%spark\n// shared configuration\n// note: this password is for Docker mysql only - it isn\u0027t smart to add passwords to code that is version controlled!\nval jdbcDriver \u003d spark.conf.get(\"spark.jdbc.driver.class\", \"org.mariadb.jdbc.Driver\")\nval dbHost     \u003d spark.conf.get(\"spark.jdbc.host\",\"mysql\")\nval dbPort     \u003d spark.conf.get(\"spark.jdbc.port\", \"3306\")\nval defaultDb  \u003d spark.conf.get(\"spark.jdbc.default.db\", \"default\")\nval dbTable    \u003d spark.conf.get(\"spark.jdbc.table\", \"customers\")\nval dbUser     \u003d spark.conf.get(\"spark.jdbc.user\", \"dataeng\")\nval dbPass     \u003d spark.conf.get(\"spark.jdbc.password\", \"dataengineering_user\")\n\nval connectionUrl \u003d s\"jdbc:mysql://$dbHost:$dbPort/$defaultDb\"\n",
