@@ -247,5 +247,7 @@ ENV/
 /site
 
 # End of https://www.gitignore.io/api/macos,linux,django,python,pycharm
+# This will tell Git to ignore the spark-defaults.conf file in the current directory and its subdirectories, 
+# and not track any changes made to it.
 docker/ch-03/start/docker/spark/conf/spark-defaults.conf
 spark-defaults.conf
