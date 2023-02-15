@@ -29,21 +29,24 @@ services:
       - mde
     hostname: "zeppelin"
 
-  # Jupyter notebook
+
+  # Jupyter Notebook - PySpark Enabled
   jupyter-spark:
+        build:
+            context: jupyter
         hostname: myjupyter
         container_name: jupyter_container
-        image: 'jupyter/pyspark-notebook:spark-3.2.0'
         networks:
             - mde
         ports:
           - "8888:8888"
         volumes:
-          - ./jupyter_notebooks:/home/jovyan/work/notebooks/
+          - ./jupyter/notebooks:/home/jovyan/work/notebooks/
           - ./spark/resources/data:/home/jovyan/work/data/
           - ./spark/resources/jars:/home/jovyan/work/jars/
           - ./spark/conf:/usr/local/spark/conf
         restart: always
+
 
 networks:
   mde:
