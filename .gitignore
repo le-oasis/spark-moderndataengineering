@@ -247,4 +247,5 @@ ENV/
 /site
 
 # End of https://www.gitignore.io/api/macos,linux,django,python,pycharm
-/workspace/spark-moderndataengineering/ch-03/start/docker/spark/conf/spark-defaults.conf
+docker/ch-03/start/docker/spark/conf/spark-defaults.conf
+spark-defaults.conf
