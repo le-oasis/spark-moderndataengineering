@@ -41,7 +41,6 @@ ENV APACHE_SPARK_VERSION="${spark_version}" \
 
 # Update package list, install OpenJDK, and remove package list files to reduce image size.
 RUN apt-get update --yes && \
-RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
     "openjdk-${openjdk_version}-jre-headless" \
     ca-certificates-java && \
