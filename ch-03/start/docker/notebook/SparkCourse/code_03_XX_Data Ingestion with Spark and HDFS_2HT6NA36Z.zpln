@@ -1,0 +1,503 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n### 01. Reading Files into Spark \n\nData can be read into Apache Spark data frames from a variety of data sources. \n\nexamples : \n- A flat file on a local disk\n- A file from HDFS\n- A Kafka Topic\n\n\nIn this example, we will read a CSV file in a HDFS folder into a Spark Data Frame.",
+      "user": "anonymous",
+      "dateUpdated": "2023-02-13 15:02:13.309",
+      "progress": 0,
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003ch3\u003e01. Reading Files into Spark\u003c/h3\u003e\n\u003cp\u003eData can be read into Apache Spark data frames from a variety of data sources.\u003c/p\u003e\n\u003cp\u003eexamples :\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eA flat file on a local disk\u003c/li\u003e\n\u003cli\u003eA file from HDFS\u003c/li\u003e\n\u003cli\u003eA Kafka Topic\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003eIn this example, we will read a CSV file in a HDFS folder into a Spark Data Frame.\u003c/p\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1676300533309_875249824",
+      "id": "20191201-192816_210944076",
+      "dateCreated": "2023-02-13 15:02:13.309",
+      "status": "READY"
+    },
+    {
+      "text": "%spark\n\n//Check if everything is installed and working correctly\nprintln(\"Current installed version of Spark is \" + spark.version)\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2023-02-13 15:02:46.733",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Current installed version of Spark is 3.0.1\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1676300533310_1781327043",
+      "id": "20191201-223537_1807095552",
+      "dateCreated": "2023-02-13 15:02:13.310",
+      "dateStarted": "2023-02-13 15:02:46.748",
+      "dateFinished": "2023-02-13 15:03:08.690",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n\n\n\nval rawSalesData \u003d spark\n                .read\n                .option(\"inferSchema\", \"true\")\n                .option(\"header\", \"true\")\n                .csv(\"file:///learn/sales_orders.csv\");\n\n//Print the schema for verification\nrawSalesData.printSchema();\n\n//Print the first 5 records for verification\nrawSalesData.show(5)",
+      "user": "anonymous",
+      "dateUpdated": "2023-02-13 15:06:09.020",
+      "progress": 100,
+      "config": {
+        "editorSetting": {
+          "language": "text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/text",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- ID: integer (nullable \u003d true)\n |-- Customer: string (nullable \u003d true)\n |-- Product: string (nullable \u003d true)\n |-- Date: string (nullable \u003d true)\n |-- Quantity: integer (nullable \u003d true)\n |-- Rate: double (nullable \u003d true)\n |-- Tags: string (nullable \u003d true)\n\n+---+--------+--------+----------+--------+-----+---------------+\n| ID|Customer| Product|      Date|Quantity| Rate|           Tags|\n+---+--------+--------+----------+--------+-----+---------------+\n|  1|   Apple|Keyboard|2019/11/21|       5|31.15|Discount:Urgent|\n|  2|LinkedIn| Headset|2019/11/25|       5| 36.9|  Urgent:Pickup|\n|  3|Facebook|Keyboard|2019/11/24|       5|49.89|           null|\n|  4|  Google|  Webcam|2019/11/07|       4|34.21|       Discount|\n|  5|LinkedIn|  Webcam|2019/11/21|       3|48.69|         Pickup|\n+---+--------+--------+----------+--------+-----+---------------+\nonly showing top 5 rows\n\n\u001b[1m\u001b[34mrawSalesData\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [ID: int, Customer: string ... 5 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d0"
+            },
+            {
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d1"
+            },
+            {
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d2"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1676300533310_1929596990",
+      "id": "20191201-224342_1438645233",
+      "dateCreated": "2023-02-13 15:02:13.310",
+      "dateStarted": "2023-02-13 15:06:09.024",
+      "dateFinished": "2023-02-13 15:06:13.090",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%md\n### 02.Writing to HDFS\n\nWrite the rawSalesData Data Frame into HDFS as a Parquet file. Use Parquet as the format since it enables splitting and filtering. Use GZIP as the compression codec. \n\nOn completion, verify if the files are correctly through HDFS command line or Ambari",
+      "user": "anonymous",
+      "dateUpdated": "2023-02-13 15:02:13.310",
+      "progress": 0,
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003ch3\u003e02.Writing to HDFS\u003c/h3\u003e\n\u003cp\u003eWrite the rawSalesData Data Frame into HDFS as a Parquet file. Use Parquet as the format since it enables splitting and filtering. Use GZIP as the compression codec.\u003c/p\u003e\n\u003cp\u003eOn completion, verify if the files are correctly through HDFS command line or Ambari\u003c/p\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1676300533310_1472120812",
+      "id": "20191201-224458_511802934",
+      "dateCreated": "2023-02-13 15:02:13.310",
+      "status": "READY"
+    },
+    {
+      "text": "%spark\n\n//Write to Sales Data to HDFS for future processing\n\nrawSalesData.write\n            .format(\"parquet\")\n            .mode(\"overwrite\")\n            .option(\"compression\", \"gzip\")\n            .save(\"file:///learn/raw_parquet\");\n            ",
+      "user": "anonymous",
+      "dateUpdated": "2023-02-13 15:07:33.977",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d3"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1676300533311_321518867",
+      "id": "20191201-225253_1705062044",
+      "dateCreated": "2023-02-13 15:02:13.311",
+      "dateStarted": "2023-02-13 15:07:33.980",
+      "dateFinished": "2023-02-13 15:07:36.171",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%md\n### 03. Writing to HDFS with Partitioning\n\nWrite a partitioned Parquet file in HDFS. Partition will be done by Product. This will create one directory per unique product available in the raw CSV. Verify through HDFS command line or Ambari",
+      "user": "anonymous",
+      "dateUpdated": "2023-02-13 15:02:13.311",
+      "progress": 0,
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003ch3\u003e03. Writing to HDFS with Partitioning\u003c/h3\u003e\n\u003cp\u003eWrite a partitioned Parquet file in HDFS. Partition will be done by Product. This will create one directory per unique product available in the raw CSV. Verify through HDFS command line or Ambari\u003c/p\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1676300533311_1340690971",
+      "id": "20191201-225634_1078208244",
+      "dateCreated": "2023-02-13 15:02:13.311",
+      "status": "READY"
+    },
+    {
+      "text": "%spark\n\nrawSalesData.write\n            .format(\"parquet\")\n            .mode(\"overwrite\")\n            .option(\"compression\", \"gzip\")\n            .partitionBy(\"Product\")\n            .save(\"file:///learn/partitioned_parquet\")",
+      "user": "anonymous",
+      "dateUpdated": "2023-02-13 15:08:20.341",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d4"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1676300533311_774257805",
+      "id": "20191201-230236_552761476",
+      "dateCreated": "2023-02-13 15:02:13.311",
+      "dateStarted": "2023-02-13 15:08:20.344",
+      "dateFinished": "2023-02-13 15:08:22.076",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%md\n### 04. Writing to Hive with Bucketing\n\nCreate a Bucketed Hive table for orders. Bucketing will be done by Product. It will create 3 buckets based on the hash generated by Product. Hive tables can be queried through SQL.",
+      "user": "anonymous",
+      "dateUpdated": "2023-02-13 15:02:13.311",
+      "progress": 0,
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003ch3\u003e04. Writing to Hive with Bucketing\u003c/h3\u003e\n\u003cp\u003eCreate a Bucketed Hive table for orders. Bucketing will be done by Product. It will create 3 buckets based on the hash generated by Product. Hive tables can be queried through SQL.\u003c/p\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1676300533311_107310828",
+      "id": "20191201-230318_1214215207",
+      "dateCreated": "2023-02-13 15:02:13.311",
+      "status": "READY"
+    },
+    {
+      "text": "%spark\nspark.conf.set(\"spark.sql.warehouse.dir\", \"file:///learn\")\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2023-02-13 15:11:12.703",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "org.apache.spark.sql.AnalysisException: Cannot modify the value of a static config: spark.sql.warehouse.dir;\n  at org.apache.spark.sql.RuntimeConfig.requireNonStaticConf(RuntimeConfig.scala:154)\n  at org.apache.spark.sql.RuntimeConfig.set(RuntimeConfig.scala:42)\n  ... 44 elided\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1676301032794_477942085",
+      "id": "paragraph_1676301032794_477942085",
+      "dateCreated": "2023-02-13 15:10:32.794",
+      "dateStarted": "2023-02-13 15:11:12.707",
+      "dateFinished": "2023-02-13 15:11:13.276",
+      "status": "ERROR"
+    },
+    {
+      "text": "%spark\n\n//Create a Hive Table for sales data with 2 buckets.\nrawSalesData.write\n            .format(\"parquet\")\n            .mode(\"overwrite\")\n            .bucketBy(3, \"Product\")\n            .saveAsTable(\"product_bucket_table\")\n            \n//Data goes in here.\nprintln(\"Hive Data Stored in : \" + sc.getConf.get(\"spark.sql.warehouse.dir\") + \"\\n\")\n            \n//Read through SQL\nsql(\"SELECT * FROM product_bucket_table where Product\u003d\u0027Mouse\u0027\").show(5)\n            \n",
+      "user": "anonymous",
+      "dateUpdated": "2023-02-13 15:09:03.853",
+      "progress": 100,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "java.util.NoSuchElementException: spark.sql.warehouse.dir\n  at org.apache.spark.SparkConf.$anonfun$get$1(SparkConf.scala:254)\n  at scala.Option.getOrElse(Option.scala:189)\n  at org.apache.spark.SparkConf.get(SparkConf.scala:254)\n  ... 44 elided\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d5"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1676300533311_2074388215",
+      "id": "20191201-230408_483175924",
+      "dateCreated": "2023-02-13 15:02:13.311",
+      "dateStarted": "2023-02-13 15:09:03.857",
+      "dateFinished": "2023-02-13 15:09:05.979",
+      "status": "ERROR"
+    },
+    {
+      "text": "\n",
+      "user": "anonymous",
+      "dateUpdated": "2023-02-13 15:02:13.311",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1676300533311_429787706",
+      "id": "20191201-230516_483125050",
+      "dateCreated": "2023-02-13 15:02:13.311",
+      "status": "READY"
+    }
+  ],
+  "name": "code_03_XX_Data Ingestion with Spark and HDFS",
+  "id": "2HT6NA36Z",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.9.0",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

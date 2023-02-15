@@ -4,6 +4,7 @@
       "text": "%md\n# Introduction to Spark on Zeppelin\nHere is the complete notebook from **Chapter 3 Basic File Reading and Custom Parsing**. If you want to work through the exercises in the chapter then use the other note **IntroToSparkOnZeppelin** instead.",
       "user": "anonymous",
       "dateUpdated": "2021-01-31 19:53:02.898",
+      "progress": 0,
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -46,6 +47,7 @@
       "text": "%md\n## Read and Analyze\nThis next paragraph shows the most basic of Spark methods for file based reading. The zero-bells attached `spark.read.text`.\nThis is useful technique if you are working data for the first time and don\u0027t know how to parse it, or maybe are having issues using other methods for automatic parsing.\n",
       "user": "anonymous",
       "dateUpdated": "2021-01-31 19:53:03.020",
+      "progress": 0,
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -88,7 +90,8 @@
       "title": "Read and Analyze",
       "text": "%spark\n// parse the raw coffee file. this is a simple csv file without headers. The goal is to build core skills: parsing, exploring data\n// format: name, boldness\n\nval df \u003d spark.read.text(\"file:///learn/raw-coffee.txt\")\ndf.printSchema\n",
       "user": "anonymous",
-      "dateUpdated": "2021-01-31 19:53:03.134",
+      "dateUpdated": "2023-02-15 05:24:43.914",
+      "progress": 0,
       "config": {
         "editorSetting": {
           "language": "scala",
@@ -122,14 +125,15 @@
       "jobName": "paragraph_1610915639289_1178268562",
       "id": "paragraph_1610320158652_480149",
       "dateCreated": "2021-01-17 20:33:59.289",
-      "dateStarted": "2021-01-31 19:53:03.151",
-      "dateFinished": "2021-01-31 19:53:03.468",
+      "dateStarted": "2023-02-15 05:24:43.928",
+      "dateFinished": "2023-02-15 05:24:57.875",
       "status": "FINISHED"
     },
     {
       "text": "%md\n## Exercise: Basic File Reading and Custom Parsing\nFollow along with the exercise in the chapter by adding a new paragraph below. Just hover below this paragraph and *Add Paragraph*. \n\nRemember. The `%spark` denotes that the paragraph is going to run with instructions against the current Spark Session.",
       "user": "anonymous",
       "dateUpdated": "2021-01-31 19:53:03.547",
+      "progress": 0,
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -171,7 +175,8 @@
     {
       "text": "%spark\n// what does the DataFrame tell us about how Spark loaded the Data?\ndf.show()",
       "user": "anonymous",
-      "dateUpdated": "2021-01-31 19:53:03.661",
+      "dateUpdated": "2023-02-15 05:25:11.193",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -207,7 +212,7 @@
           "group": "spark",
           "values": [
             {
-              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d2"
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d0"
             }
           ],
           "interpreterSettingId": "spark"
@@ -217,14 +222,15 @@
       "jobName": "paragraph_1610915649135_224488823",
       "id": "paragraph_1610915649135_224488823",
       "dateCreated": "2021-01-17 20:34:09.135",
-      "dateStarted": "2021-01-31 19:53:03.674",
-      "dateFinished": "2021-01-31 19:53:04.107",
+      "dateStarted": "2023-02-15 05:25:11.197",
+      "dateFinished": "2023-02-15 05:25:13.379",
       "status": "FINISHED"
     },
     {
       "text": "%spark\n// convert the original DataFrame by parsing each Row of data using the DataFrame.map transformation\n// if you add another line or few to the raw-coffee.txt, add a row like `verve, 4, sparkly` and or modify the function\n// to support 3 or 4 item arrays\n\nval converted \u003d df.map { r \u003d\u003e\n  r.getString(0).split(\",\") match {\n    case Array(name:String,roast:String) \u003d\u003e\n      (name,roast.trim.toInt)\n    case _ \u003d\u003e (\"unknown\", 0) // handles malformed rows (eg. more than 2 commas.)\n  }\n}.toDF(\"name\",\"roast\")\n\nconverted.printSchema",
       "user": "anonymous",
-      "dateUpdated": "2021-01-31 19:53:04.173",
+      "dateUpdated": "2023-02-15 05:25:41.070",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -257,14 +263,15 @@
       "jobName": "paragraph_1610915690346_1266846800",
       "id": "paragraph_1610915690346_1266846800",
       "dateCreated": "2021-01-17 20:34:50.346",
-      "dateStarted": "2021-01-31 19:53:04.183",
-      "dateFinished": "2021-01-31 19:53:05.788",
+      "dateStarted": "2023-02-15 05:25:41.074",
+      "dateFinished": "2023-02-15 05:25:44.005",
       "status": "FINISHED"
     },
     {
       "text": "%spark\nconverted.show()",
       "user": "anonymous",
-      "dateUpdated": "2021-01-31 19:53:05.886",
+      "dateUpdated": "2023-02-15 05:25:59.316",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -300,7 +307,7 @@
           "group": "spark",
           "values": [
             {
-              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d3"
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d1"
             }
           ],
           "interpreterSettingId": "spark"
@@ -310,9 +317,27 @@
       "jobName": "paragraph_1610915786941_458067089",
       "id": "paragraph_1610915786941_458067089",
       "dateCreated": "2021-01-17 20:36:26.941",
-      "dateStarted": "2021-01-31 19:53:05.899",
-      "dateFinished": "2021-01-31 19:53:06.582",
+      "dateStarted": "2023-02-15 05:25:59.319",
+      "dateFinished": "2023-02-15 05:26:00.208",
       "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n",
+      "user": "anonymous",
+      "dateUpdated": "2023-02-15 05:25:59.319",
+      "progress": 0,
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1676438759319_187647709",
+      "id": "paragraph_1676438759319_187647709",
+      "dateCreated": "2023-02-15 05:25:59.319",
+      "status": "READY"
     }
   ],
   "name": "IntroToSparkOnZeppelinFinal",
@@ -325,7 +350,5 @@
   "config": {
     "isZeppelinNotebookCronEnable": false
   },
-  "info": {
-    "isRunning": true
-  }
+  "info": {}
 }

@@ -4,6 +4,7 @@
       "text": "%md\n## Data Inception: Using Spark to help Spark\nIn this following notebook, we will learn to use Spark to help us work more efficiently.\n",
       "user": "anonymous",
       "dateUpdated": "2021-01-31 19:53:31.470",
+      "progress": 0,
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -46,7 +47,8 @@
       "title": "Read CSV",
       "text": "%spark\n\n// load the same file from the IntroToSparkOnZeppelin \nval coffees \u003d spark.read.csv(\"file:///learn/raw-coffee.txt\").toDF(\"name\",\"roast\")\ncoffees.show()",
       "user": "anonymous",
-      "dateUpdated": "2021-01-31 19:53:31.586",
+      "dateUpdated": "2023-02-15 06:05:05.883",
+      "progress": 100,
       "config": {
         "editorSetting": {
           "language": "scala",
@@ -83,10 +85,10 @@
           "group": "spark",
           "values": [
             {
-              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d4"
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d0"
             },
             {
-              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d5"
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d1"
             }
           ],
           "interpreterSettingId": "spark"
@@ -96,14 +98,15 @@
       "jobName": "paragraph_1610924946843_2047677270",
       "id": "paragraph_1610923180042_1100920629",
       "dateCreated": "2021-01-17 23:09:06.843",
-      "dateStarted": "2021-01-31 19:53:31.599",
-      "dateFinished": "2021-01-31 19:53:32.329",
+      "dateStarted": "2023-02-15 06:05:05.898",
+      "dateFinished": "2023-02-15 06:05:26.384",
       "status": "FINISHED"
     },
     {
       "text": "%spark\ncoffees.printSchema",
       "user": "anonymous",
       "dateUpdated": "2021-01-31 19:53:32.403",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -144,7 +147,8 @@
       "title": "Infer the Schema",
       "text": "%spark\nval coffeeAndSchema \u003d spark.read\n  .option(\"inferSchema\", true)\n  .csv(\"file:///learn/raw-coffee.txt\")\n  .toDF(\"name\",\"roast\")\n\ncoffeeAndSchema.printSchema",
       "user": "anonymous",
-      "dateUpdated": "2021-01-31 19:53:32.822",
+      "dateUpdated": "2023-02-15 06:07:05.017",
+      "progress": 100,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -181,10 +185,10 @@
           "group": "spark",
           "values": [
             {
-              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d6"
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d2"
             },
             {
-              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d7"
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d3"
             }
           ],
           "interpreterSettingId": "spark"
@@ -194,15 +198,16 @@
       "jobName": "paragraph_1610924958925_1208042423",
       "id": "paragraph_1610924958925_1208042423",
       "dateCreated": "2021-01-17 23:09:18.925",
-      "dateStarted": "2021-01-31 19:53:32.838",
-      "dateFinished": "2021-01-31 19:53:33.649",
+      "dateStarted": "2023-02-15 06:07:05.021",
+      "dateFinished": "2023-02-15 06:07:05.658",
       "status": "FINISHED"
     },
     {
       "title": "Steal the Schema Pattern",
       "text": "%spark\nimport org.apache.spark.sql.types._\n\nval coffeeSchema \u003d coffeeAndSchema.schema\nval coffeeSchemaDDL \u003d coffeeSchema.toDDL\n\nval coffeeDDLStruct: StructType \u003d StructType.fromDDL(coffeeSchemaDDL)\nval coffees \u003d spark.read\n  .option(\"inferSchema\", false)\n  .schema(coffeeDDLStruct)\n  .csv(\"file:///learn/raw-coffee.txt\")\n\ncoffees.printSchema\n\ncoffees.show()\n",
       "user": "anonymous",
-      "dateUpdated": "2021-01-31 19:53:33.739",
+      "dateUpdated": "2023-02-15 06:07:12.512",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -239,7 +244,7 @@
           "group": "spark",
           "values": [
             {
-              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d8"
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d4"
             }
           ],
           "interpreterSettingId": "spark"
@@ -249,15 +254,16 @@
       "jobName": "paragraph_1610925725368_1836363333",
       "id": "paragraph_1610925725368_1836363333",
       "dateCreated": "2021-01-17 23:22:05.368",
-      "dateStarted": "2021-01-31 19:53:33.755",
-      "dateFinished": "2021-01-31 19:53:34.755",
+      "dateStarted": "2023-02-15 06:07:12.514",
+      "dateFinished": "2023-02-15 06:07:13.159",
       "status": "FINISHED"
     },
     {
       "title": "Manually Build the Schema",
       "text": "%spark\nval coffeeSchema \u003d StructType(\n    Seq(\n        StructField(\"name\", StringType,\n          metadata \u003d new MetadataBuilder()\n            .putString(\"comment\", \"Coffee Brand Name\")\n            .build()\n        ),\n        StructField(\"roast\", DoubleType,\n           metadata \u003d new MetadataBuilder()\n            .putString(\"comment\", \"Coffee Roast Level (1-10)\")\n            .build()\n        )\n    )\n)\n\nval coffees \u003d spark.read\n  .option(\"inferSchema\", \"false\")\n  .schema(coffeeSchema)\n  .csv(\"file:///learn/raw-coffee.txt\")\n",
       "user": "anonymous",
-      "dateUpdated": "2021-01-31 19:53:34.853",
+      "dateUpdated": "2023-02-15 06:06:12.510",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -277,11 +283,11 @@
         "forms": {}
       },
       "results": {
-        "code": "SUCCESS",
+        "code": "ERROR",
         "msg": [
           {
             "type": "TEXT",
-            "data": "\u001b[1m\u001b[34mcoffeeSchema\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.types.StructType\u001b[0m \u003d StructType(StructField(name,StringType,true), StructField(roast,DoubleType,true))\n\u001b[1m\u001b[34mcoffees\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [name: string, roast: double]\n"
+            "data": "\u003cconsole\u003e:24: \u001b[31merror: \u001b[0mnot found: value StructType\n       val coffeeSchema \u003d StructType(\n                          ^\n\u003cconsole\u003e:26: \u001b[31merror: \u001b[0mnot found: value StructField\n               StructField(\"name\", StringType,\n               ^\n\u003cconsole\u003e:26: \u001b[31merror: \u001b[0mnot found: value StringType\n               StructField(\"name\", StringType,\n                                   ^\n\u003cconsole\u003e:27: \u001b[31merror: \u001b[0mnot found: value metadata\n                 metadata \u003d new MetadataBuilder()\n                 ^\n\u003cconsole\u003e:31: \u001b[31merror: \u001b[0mnot found: value StructField\n               StructField(\"roast\", DoubleType,\n               ^\n\u003cconsole\u003e:31: \u001b[31merror: \u001b[0mnot found: value DoubleType\n               StructField(\"roast\", DoubleType,\n                                    ^\n\u003cconsole\u003e:32: \u001b[31merror: \u001b[0mnot found: value metadata\n                  metadata \u003d new MetadataBuilder()\n                  ^\n"
           }
         ]
       },
@@ -291,15 +297,16 @@
       "jobName": "paragraph_1610928752293_979981471",
       "id": "paragraph_1610928752293_979981471",
       "dateCreated": "2021-01-18 00:12:32.293",
-      "dateStarted": "2021-01-31 19:53:34.865",
-      "dateFinished": "2021-01-31 19:53:35.212",
-      "status": "FINISHED"
+      "dateStarted": "2023-02-15 06:06:12.513",
+      "dateFinished": "2023-02-15 06:06:12.602",
+      "status": "ERROR"
     },
     {
       "title": "Create a view of our Coffee Data",
       "text": "%spark\ncoffees.createOrReplaceTempView(\"coffees\")\nspark.sql(\"desc coffees\").show(truncate\u003dfalse)",
       "user": "anonymous",
       "dateUpdated": "2021-01-31 19:53:35.265",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -342,6 +349,7 @@
       "text": "%sql\nselect * from coffees",
       "user": "anonymous",
       "dateUpdated": "2021-01-31 19:53:35.980",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -426,6 +434,7 @@
       "text": "%spark\nspark.sql(\"select avg(roast) as avg_roast from coffees\").show",
       "user": "anonymous",
       "dateUpdated": "2021-01-31 19:53:36.293",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -481,6 +490,7 @@
       "text": "%spark\n// the SparkSession (spark) contains a pointer to the SQLContext\nspark.sqlContext.sql(\"select * from coffees\").show\n// which is also available as a direct alias on the SparkSession\nspark.sql(\"select * from coffees\").show",
       "user": "anonymous",
       "dateUpdated": "2021-01-31 19:53:37.506",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -539,6 +549,7 @@
       "text": "%spark\nspark.catalog.listTables.show",
       "user": "anonymous",
       "dateUpdated": "2021-01-31 19:53:38.019",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -580,6 +591,7 @@
       "text": "%spark\n",
       "user": "anonymous",
       "dateUpdated": "2021-01-31 19:53:38.731",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -616,7 +628,5 @@
   "config": {
     "isZeppelinNotebookCronEnable": false
   },
-  "info": {
-    "isRunning": true
-  }
+  "info": {}
 }
