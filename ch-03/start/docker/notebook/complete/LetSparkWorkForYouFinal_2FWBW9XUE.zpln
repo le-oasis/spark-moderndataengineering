@@ -47,7 +47,7 @@
       "title": "Read CSV",
       "text": "%spark\n\n// load the same file from the IntroToSparkOnZeppelin \nval coffees \u003d spark.read.csv(\"file:///learn/raw-coffee.txt\").toDF(\"name\",\"roast\")\ncoffees.show()",
       "user": "anonymous",
-      "dateUpdated": "2023-02-15 06:05:05.883",
+      "dateUpdated": "2023-02-15 12:38:07.602",
       "progress": 100,
       "config": {
         "editorSetting": {
@@ -98,8 +98,8 @@
       "jobName": "paragraph_1610924946843_2047677270",
       "id": "paragraph_1610923180042_1100920629",
       "dateCreated": "2021-01-17 23:09:06.843",
-      "dateStarted": "2023-02-15 06:05:05.898",
-      "dateFinished": "2023-02-15 06:05:26.384",
+      "dateStarted": "2023-02-15 12:38:07.606",
+      "dateFinished": "2023-02-15 12:38:12.587",
       "status": "FINISHED"
     },
     {
@@ -206,7 +206,7 @@
       "title": "Steal the Schema Pattern",
       "text": "%spark\nimport org.apache.spark.sql.types._\n\nval coffeeSchema \u003d coffeeAndSchema.schema\nval coffeeSchemaDDL \u003d coffeeSchema.toDDL\n\nval coffeeDDLStruct: StructType \u003d StructType.fromDDL(coffeeSchemaDDL)\nval coffees \u003d spark.read\n  .option(\"inferSchema\", false)\n  .schema(coffeeDDLStruct)\n  .csv(\"file:///learn/raw-coffee.txt\")\n\ncoffees.printSchema\n\ncoffees.show()\n",
       "user": "anonymous",
-      "dateUpdated": "2023-02-15 06:07:12.512",
+      "dateUpdated": "2023-02-15 12:32:25.512",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -262,7 +262,7 @@
       "title": "Manually Build the Schema",
       "text": "%spark\nval coffeeSchema \u003d StructType(\n    Seq(\n        StructField(\"name\", StringType,\n          metadata \u003d new MetadataBuilder()\n            .putString(\"comment\", \"Coffee Brand Name\")\n            .build()\n        ),\n        StructField(\"roast\", DoubleType,\n           metadata \u003d new MetadataBuilder()\n            .putString(\"comment\", \"Coffee Roast Level (1-10)\")\n            .build()\n        )\n    )\n)\n\nval coffees \u003d spark.read\n  .option(\"inferSchema\", \"false\")\n  .schema(coffeeSchema)\n  .csv(\"file:///learn/raw-coffee.txt\")\n",
       "user": "anonymous",
-      "dateUpdated": "2023-02-15 06:06:12.510",
+      "dateUpdated": "2023-02-15 12:37:49.604",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -297,8 +297,8 @@
       "jobName": "paragraph_1610928752293_979981471",
       "id": "paragraph_1610928752293_979981471",
       "dateCreated": "2021-01-18 00:12:32.293",
-      "dateStarted": "2023-02-15 06:06:12.513",
-      "dateFinished": "2023-02-15 06:06:12.602",
+      "dateStarted": "2023-02-15 12:37:49.622",
+      "dateFinished": "2023-02-15 12:38:04.615",
       "status": "ERROR"
     },
     {
