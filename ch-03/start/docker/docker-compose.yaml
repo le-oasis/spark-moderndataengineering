@@ -35,7 +35,7 @@ services:
         container_name: jupyter_container
         image: 'jupyter/pyspark-notebook:spark-3.2.0'
         networks:
-            - oasiscorp
+            - mde
         ports:
           - "8888:8888"
         volumes:
@@ -44,8 +44,6 @@ services:
           - ./spark/resources/jars:/home/jovyan/work/jars/
           - ./spark/conf:/usr/local/spark/conf
         restart: always
-        depends_on:
-                - postgres
 
 networks:
   mde:
