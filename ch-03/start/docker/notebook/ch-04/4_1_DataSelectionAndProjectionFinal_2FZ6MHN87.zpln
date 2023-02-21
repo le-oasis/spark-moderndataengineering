@@ -4,7 +4,7 @@
       "title": "Data Generation",
       "text": "%spark\ncase class Store(\n    name: String, \n    capacity: Int, \n    opens: Int, \n    closes: Int)\n    \nval stores \u003d Seq(\n    Store(\"a\", 24, 8, 20),\n    Store(\"b\", 36, 7, 21),\n    Store(\"c\", 18, 5, 23)\n)\n\nval df \u003d spark.createDataFrame(stores)\ndf.createOrReplaceTempView(\"stores\")",
       "user": "anonymous",
-      "dateUpdated": "2021-02-06 20:56:19.975",
+      "dateUpdated": "2023-02-21 14:15:39.625",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -39,15 +39,15 @@
       "jobName": "paragraph_1612037491392_1831291883",
       "id": "paragraph_1612037491392_1831291883",
       "dateCreated": "2021-01-30 20:11:31.392",
-      "dateStarted": "2021-02-06 20:56:20.026",
-      "dateFinished": "2021-02-06 20:56:47.030",
+      "dateStarted": "2023-02-21 14:15:39.628",
+      "dateFinished": "2023-02-21 14:15:40.212",
       "status": "FINISHED"
     },
     {
       "title": "Selection: Find all stores open after 10pm",
       "text": "%spark\nval query \u003d spark.sql(\"select * from stores where closes \u003e\u003d 22\")\n//query.explain(true)\nquery.show()",
       "user": "anonymous",
-      "dateUpdated": "2021-02-06 21:20:59.497",
+      "dateUpdated": "2023-02-21 14:15:42.372",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -82,15 +82,15 @@
       "jobName": "paragraph_1612042148906_1724978527",
       "id": "paragraph_1612042148906_1724978527",
       "dateCreated": "2021-01-30 21:29:08.906",
-      "dateStarted": "2021-02-06 20:56:47.124",
-      "dateFinished": "2021-02-06 20:56:48.854",
+      "dateStarted": "2023-02-21 14:15:42.375",
+      "dateFinished": "2023-02-21 14:15:43.196",
       "status": "FINISHED"
     },
     {
       "title": "Selection: Find all stores open after 10pm (DataFrame approach)",
       "text": "%spark\nimport org.apache.spark.sql.functions._\n\nval filter \u003d df.filter($\"closes\" \u003e\u003d 22)\nval where \u003d df.where(\u0027closes \u003e\u003d 22)\nfilter.show()\nwhere.show()",
       "user": "anonymous",
-      "dateUpdated": "2021-02-06 21:20:45.819",
+      "dateUpdated": "2023-02-21 14:15:45.659",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -125,15 +125,15 @@
       "jobName": "paragraph_1612042843043_1749190313",
       "id": "paragraph_1612042843043_1749190313",
       "dateCreated": "2021-01-30 21:40:43.043",
-      "dateStarted": "2021-02-06 21:20:45.832",
-      "dateFinished": "2021-02-06 21:20:46.239",
+      "dateStarted": "2023-02-21 14:15:45.662",
+      "dateFinished": "2023-02-21 14:15:46.112",
       "status": "FINISHED"
     },
     {
       "title": "Projection: SQL approach",
       "text": "%spark\n// find all stores with an occupancy greater than 20\nval pq \u003d spark.sql(\"select name from stores where capacity \u003e 20\")\n//pq.explain(true)\npq.show()\n",
       "user": "anonymous",
-      "dateUpdated": "2021-02-06 20:56:49.645",
+      "dateUpdated": "2023-02-21 14:15:48.944",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -168,15 +168,15 @@
       "jobName": "paragraph_1612040361468_1903075951",
       "id": "paragraph_1612040361468_1903075951",
       "dateCreated": "2021-01-30 20:59:21.468",
-      "dateStarted": "2021-02-06 20:56:49.661",
-      "dateFinished": "2021-02-06 20:56:50.278",
+      "dateStarted": "2023-02-21 14:15:48.948",
+      "dateFinished": "2023-02-21 14:15:49.403",
       "status": "FINISHED"
     },
     {
       "title": "Projection: DataFrame approach",
       "text": "%spark\ndf\n  .select(\"name\")\n  .where(\u0027capacity \u003e 20)\n  .show\n",
       "user": "anonymous",
-      "dateUpdated": "2021-02-06 20:56:50.358",
+      "dateUpdated": "2023-02-21 14:15:51.001",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -211,8 +211,8 @@
       "jobName": "paragraph_1612047712316_857469",
       "id": "paragraph_1612047712316_857469",
       "dateCreated": "2021-01-30 23:01:52.317",
-      "dateStarted": "2021-02-06 20:56:50.395",
-      "dateFinished": "2021-02-06 20:56:50.953",
+      "dateStarted": "2023-02-21 14:15:51.005",
+      "dateFinished": "2023-02-21 14:15:51.190",
       "status": "FINISHED"
     },
     {
@@ -262,7 +262,7 @@
       "title": "Expanding our Data through Joins",
       "text": "%spark\n\n// each store has a number of current occupants (we can see if there is room in a store for more people)\ncase class StoreOccupants(storename: String, occupants: Int)\n\nval occupants \u003d Seq(\n  StoreOccupants(\"a\", 8),\n  StoreOccupants(\"b\", 20),\n  StoreOccupants(\"c\", 16),\n  StoreOccupants(\"d\", 55),\n  StoreOccupants(\"e\", 8)\n)\n\nval occupancy \u003d spark.createDataFrame(occupants)\noccupancy.createOrReplaceTempView(\"store_occupants\")",
       "user": "anonymous",
-      "dateUpdated": "2021-02-06 20:56:52.294",
+      "dateUpdated": "2023-02-21 14:15:05.195",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -297,15 +297,15 @@
       "jobName": "paragraph_1612048965209_215318272",
       "id": "paragraph_1612048965209_215318272",
       "dateCreated": "2021-01-30 23:22:45.209",
-      "dateStarted": "2021-02-06 20:56:52.306",
-      "dateFinished": "2021-02-06 20:56:52.686",
+      "dateStarted": "2023-02-21 14:15:05.201",
+      "dateFinished": "2023-02-21 14:15:22.124",
       "status": "FINISHED"
     },
     {
       "title": "Inner Join: SparkSQL Way",
       "text": "%sql\nselect * from stores\ninner join store_occupants on stores.`name` \u003d\u003d store_occupants.`storename`",
       "user": "anonymous",
-      "dateUpdated": "2021-02-06 20:56:52.772",
+      "dateUpdated": "2023-02-21 14:15:55.929",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -389,15 +389,15 @@
       "jobName": "paragraph_1612127779584_100245478",
       "id": "paragraph_1612127779584_100245478",
       "dateCreated": "2021-01-31 21:16:19.584",
-      "dateStarted": "2021-02-06 20:56:52.789",
-      "dateFinished": "2021-02-06 20:56:56.137",
+      "dateStarted": "2023-02-21 14:15:55.934",
+      "dateFinished": "2023-02-21 14:15:57.714",
       "status": "FINISHED"
     },
     {
       "title": "Inner Join: DataFrame Way",
       "text": "%spark\nval inner \u003d df\n  .join(occupancy)\n  .where(df(\"name\") \u003d\u003d\u003d occupancy(\"storename\"))\n  \ninner.show()",
       "user": "anonymous",
-      "dateUpdated": "2021-02-06 20:56:56.197",
+      "dateUpdated": "2023-02-21 14:16:02.517",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -448,15 +448,15 @@
       "jobName": "paragraph_1612128192864_712610208",
       "id": "paragraph_1612128192864_712610208",
       "dateCreated": "2021-01-31 21:23:12.864",
-      "dateStarted": "2021-02-06 20:56:56.215",
-      "dateFinished": "2021-02-06 20:56:56.937",
+      "dateStarted": "2023-02-21 14:16:02.521",
+      "dateFinished": "2023-02-21 14:16:03.115",
       "status": "FINISHED"
     },
     {
       "title": "Right Join: SparkSQL Way",
       "text": "%sql\nselect stores.*, store_occupants.`occupants` from stores \nright join store_occupants on stores.`name` \u003d\u003d store_occupants.`storename`\n",
       "user": "anonymous",
-      "dateUpdated": "2021-02-06 20:56:57.012",
+      "dateUpdated": "2023-02-21 14:16:04.891",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -539,16 +539,16 @@
       "jobName": "paragraph_1612055401017_964595988",
       "id": "paragraph_1612055401017_964595988",
       "dateCreated": "2021-01-31 01:10:01.017",
-      "dateStarted": "2021-02-06 20:56:57.030",
-      "dateFinished": "2021-02-06 20:56:57.370",
+      "dateStarted": "2023-02-21 14:16:04.895",
+      "dateFinished": "2023-02-21 14:16:05.082",
       "status": "FINISHED"
     },
     {
       "title": "Right Join: DataFrame Way",
       "text": "%spark\n// df is our stores data\nval rightJoined \u003d df\n  .join(occupancy,\n    df(\"name\") \u003d\u003d\u003d occupancy(\"storename\"),\n    \"right\")\n\nrightJoined.show()\n\n// show the query plan\n//rightJoined.explain(true)\n",
       "user": "anonymous",
-      "dateUpdated": "2021-02-06 20:56:57.427",
-      "progress": 0,
+      "dateUpdated": "2023-02-21 14:16:08.654",
+      "progress": 100,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -598,15 +598,15 @@
       "jobName": "paragraph_1612126183281_1040290043",
       "id": "paragraph_1612126183281_1040290043",
       "dateCreated": "2021-01-31 20:49:43.281",
-      "dateStarted": "2021-02-06 20:56:57.449",
-      "dateFinished": "2021-02-06 20:56:58.136",
+      "dateStarted": "2023-02-21 14:16:08.657",
+      "dateFinished": "2023-02-21 14:16:09.187",
       "status": "FINISHED"
     },
     {
       "title": "Left Join: SparkSQL Way",
       "text": "%sql\nselect stores.*, store_occupants.`occupants` from stores \nleft join store_occupants on stores.`name` \u003d\u003d store_occupants.`storename`",
       "user": "anonymous",
-      "dateUpdated": "2021-02-06 20:56:58.149",
+      "dateUpdated": "2023-02-21 14:16:13.258",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -689,15 +689,15 @@
       "jobName": "paragraph_1612124720819_1009770906",
       "id": "paragraph_1612124720819_1009770906",
       "dateCreated": "2021-01-31 20:25:20.819",
-      "dateStarted": "2021-02-06 20:56:58.180",
-      "dateFinished": "2021-02-06 20:56:58.556",
+      "dateStarted": "2023-02-21 14:16:13.262",
+      "dateFinished": "2023-02-21 14:16:13.594",
       "status": "FINISHED"
     },
     {
       "title": "Left Join: DataFrame Way",
       "text": "%spark\n// df is our stores data\nval leftJoined \u003d df\n  .join(occupancy,\n    df(\"name\") \u003d\u003d\u003d occupancy(\"storename\"),\n    \"left\")\n\nleftJoined.show()\n\n// show the query plan\n//leftJoined.explain(true)",
       "user": "anonymous",
-      "dateUpdated": "2021-02-06 20:56:58.571",
+      "dateUpdated": "2023-02-21 14:16:21.027",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -748,15 +748,15 @@
       "jobName": "paragraph_1612126444405_1783165305",
       "id": "paragraph_1612126444405_1783165305",
       "dateCreated": "2021-01-31 20:54:04.405",
-      "dateStarted": "2021-02-06 20:56:58.589",
-      "dateFinished": "2021-02-06 20:56:59.399",
+      "dateStarted": "2023-02-21 14:16:21.030",
+      "dateFinished": "2023-02-21 14:16:21.389",
       "status": "FINISHED"
     },
     {
       "title": "Inline Views",
       "text": "%sql\ncreate or replace \ntemporary view boutiques as (\n  select * from VALUES (\"c\") as data(boutiquename)\n)\n",
       "user": "anonymous",
-      "dateUpdated": "2021-02-06 20:56:59.486",
+      "dateUpdated": "2023-02-21 14:16:28.186",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -786,15 +786,15 @@
       "jobName": "paragraph_1612142782759_506924785",
       "id": "paragraph_1612142782759_506924785",
       "dateCreated": "2021-02-01 01:26:22.759",
-      "dateStarted": "2021-02-06 20:56:59.499",
-      "dateFinished": "2021-02-06 20:56:59.590",
+      "dateStarted": "2023-02-21 14:16:28.190",
+      "dateFinished": "2023-02-21 14:16:28.264",
       "status": "FINISHED"
     },
     {
       "title": "View by way of Selection",
       "text": "%sql\ncreate or replace\ntemporary view boutiques as (\n  select stores.`name` as boutiquename\n  from stores\n  where capacity \u003c 20\n)",
       "user": "anonymous",
-      "dateUpdated": "2021-02-06 20:56:59.598",
+      "dateUpdated": "2023-02-21 14:16:42.050",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -824,15 +824,15 @@
       "jobName": "paragraph_1612144569211_2100979223",
       "id": "paragraph_1612144569211_2100979223",
       "dateCreated": "2021-02-01 01:56:09.211",
-      "dateStarted": "2021-02-06 20:56:59.699",
-      "dateFinished": "2021-02-06 20:56:59.821",
+      "dateStarted": "2023-02-21 14:16:42.053",
+      "dateFinished": "2023-02-21 14:16:42.082",
       "status": "FINISHED"
     },
     {
       "title": "Semi Join: SparkSQL Way",
       "text": "%sql\nselect * from stores\nsemi join boutiques on stores.`name` \u003d\u003d boutiques.`boutiquename`",
       "user": "anonymous",
-      "dateUpdated": "2021-02-06 20:56:59.914",
+      "dateUpdated": "2023-02-21 14:16:47.713",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -914,8 +914,8 @@
       "jobName": "paragraph_1612126719044_1562801401",
       "id": "paragraph_1612126719044_1562801401",
       "dateCreated": "2021-01-31 20:58:39.044",
-      "dateStarted": "2021-02-06 20:56:59.935",
-      "dateFinished": "2021-02-06 20:57:00.405",
+      "dateStarted": "2023-02-21 14:16:47.716",
+      "dateFinished": "2023-02-21 14:16:47.845",
       "status": "FINISHED"
     },
     {

@@ -251,3 +251,4 @@ ENV/
 # and not track any changes made to it.
 docker/ch-03/start/docker/spark/conf/spark-defaults.conf
 spark-defaults.conf
+hive-site.xml
