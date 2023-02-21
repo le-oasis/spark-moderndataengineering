@@ -5,6 +5,7 @@
       "text": "%spark\ncase class Store(\n    name: String, \n    capacity: Int, \n    opens: Int, \n    closes: Int)\n    \nval stores \u003d Seq(\n    Store(\"a\", 24, 8, 20),\n    Store(\"b\", 36, 7, 21),\n    Store(\"c\", 18, 5, 23)\n)\n\nval df \u003d spark.createDataFrame(stores)\ndf.createOrReplaceTempView(\"stores\")",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 20:56:19.975",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -47,6 +48,7 @@
       "text": "%spark\nval query \u003d spark.sql(\"select * from stores where closes \u003e\u003d 22\")\n//query.explain(true)\nquery.show()",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 21:20:59.497",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -89,6 +91,7 @@
       "text": "%spark\nimport org.apache.spark.sql.functions._\n\nval filter \u003d df.filter($\"closes\" \u003e\u003d 22)\nval where \u003d df.where(\u0027closes \u003e\u003d 22)\nfilter.show()\nwhere.show()",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 21:20:45.819",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -131,6 +134,7 @@
       "text": "%spark\n// find all stores with an occupancy greater than 20\nval pq \u003d spark.sql(\"select name from stores where capacity \u003e 20\")\n//pq.explain(true)\npq.show()\n",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 20:56:49.645",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -173,6 +177,7 @@
       "text": "%spark\ndf\n  .select(\"name\")\n  .where(\u0027capacity \u003e 20)\n  .show\n",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 20:56:50.358",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -213,7 +218,8 @@
     {
       "text": "%md\n## Joins\nYou can take advantage of joins to combine two or more sources across a join criteria (eg. special selection predicate). There are a few different ways to join your data and selecting the appropriate join style is critically important to the resulting rows returned post-query.\n\n### Join Styles\n* **Innter Join** - Selects all rows where the conditions are fulfilled across both sides of the join\n* **Right Join**  - Returns all rows from the right-hand view or dataframe, joining all rows where the conditions are met on the left-hand, or appending nulls when conditions are not met\n* **Left Join**   - Returns all rows from the left-hand view or dataframe, joining all rows where the conditions are also met on the right-hand side, or appending nulls when conditions are not met\n* **Semi Join**  - Returns all rows from the left-hand view or dataframe only if the right-hand condition is met (can use to create a selection filter that uses another reference (dataframe or view) without joining any data from the right-hand side of the join. Eg. \"I want to see all stores that have current occupancy data otherwise I am not interested\"\n* **Full Join**   - Returns all rows across both views or dataframes, filling in null values on either side that doesn\u0027t meet the match criteria",
       "user": "anonymous",
-      "dateUpdated": "2021-02-06 20:56:50.977",
+      "dateUpdated": "2023-02-21 13:36:26.607",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -248,8 +254,8 @@
       "jobName": "paragraph_1612124536768_249771908",
       "id": "paragraph_1612124536768_249771908",
       "dateCreated": "2021-01-31 20:22:16.769",
-      "dateStarted": "2021-02-06 20:56:50.993",
-      "dateFinished": "2021-02-06 20:56:52.272",
+      "dateStarted": "2023-02-21 13:36:26.609",
+      "dateFinished": "2023-02-21 13:36:29.067",
       "status": "FINISHED"
     },
     {
@@ -257,6 +263,7 @@
       "text": "%spark\n\n// each store has a number of current occupants (we can see if there is room in a store for more people)\ncase class StoreOccupants(storename: String, occupants: Int)\n\nval occupants \u003d Seq(\n  StoreOccupants(\"a\", 8),\n  StoreOccupants(\"b\", 20),\n  StoreOccupants(\"c\", 16),\n  StoreOccupants(\"d\", 55),\n  StoreOccupants(\"e\", 8)\n)\n\nval occupancy \u003d spark.createDataFrame(occupants)\noccupancy.createOrReplaceTempView(\"store_occupants\")",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 20:56:52.294",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -299,6 +306,7 @@
       "text": "%sql\nselect * from stores\ninner join store_occupants on stores.`name` \u003d\u003d store_occupants.`storename`",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 20:56:52.772",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -390,6 +398,7 @@
       "text": "%spark\nval inner \u003d df\n  .join(occupancy)\n  .where(df(\"name\") \u003d\u003d\u003d occupancy(\"storename\"))\n  \ninner.show()",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 20:56:56.197",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -448,6 +457,7 @@
       "text": "%sql\nselect stores.*, store_occupants.`occupants` from stores \nright join store_occupants on stores.`name` \u003d\u003d store_occupants.`storename`\n",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 20:56:57.012",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -538,6 +548,7 @@
       "text": "%spark\n// df is our stores data\nval rightJoined \u003d df\n  .join(occupancy,\n    df(\"name\") \u003d\u003d\u003d occupancy(\"storename\"),\n    \"right\")\n\nrightJoined.show()\n\n// show the query plan\n//rightJoined.explain(true)\n",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 20:56:57.427",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -596,6 +607,7 @@
       "text": "%sql\nselect stores.*, store_occupants.`occupants` from stores \nleft join store_occupants on stores.`name` \u003d\u003d store_occupants.`storename`",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 20:56:58.149",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -686,6 +698,7 @@
       "text": "%spark\n// df is our stores data\nval leftJoined \u003d df\n  .join(occupancy,\n    df(\"name\") \u003d\u003d\u003d occupancy(\"storename\"),\n    \"left\")\n\nleftJoined.show()\n\n// show the query plan\n//leftJoined.explain(true)",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 20:56:58.571",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -744,6 +757,7 @@
       "text": "%sql\ncreate or replace \ntemporary view boutiques as (\n  select * from VALUES (\"c\") as data(boutiquename)\n)\n",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 20:56:59.486",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -781,6 +795,7 @@
       "text": "%sql\ncreate or replace\ntemporary view boutiques as (\n  select stores.`name` as boutiquename\n  from stores\n  where capacity \u003c 20\n)",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 20:56:59.598",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -818,6 +833,7 @@
       "text": "%sql\nselect * from stores\nsemi join boutiques on stores.`name` \u003d\u003d boutiques.`boutiquename`",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 20:56:59.914",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -907,6 +923,7 @@
       "text": "%spark\n// semi-join\nval boutiques \u003d spark.sql(\"select * from boutiques\")\nval semiJoin \u003d df\n  .join(boutiques,\n    df(\"name\") \u003d\u003d\u003d boutiques(\"boutiquename\"),\n    \"semi\")\n\nsemiJoin.show()\n\n// show the query plan\nsemiJoin.explain(true)",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 20:57:00.427",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -965,6 +982,7 @@
       "text": "%sql\nselect * from stores \nanti join boutiques \non stores.`name` \u003d\u003d boutiques.`boutiquename`",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 21:01:26.917",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1054,6 +1072,7 @@
       "text": "%spark\nval boutiques \u003d spark.sql(\"select * from boutiques\")\nval antiJoin \u003d df\n  .join(boutiques,\n    df(\"name\") \u003d\u003d\u003d boutiques(\"boutiquename\"),\n    \"anti\")\n\nantiJoin.show()",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 21:00:03.393",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1112,6 +1131,7 @@
       "text": "%sql\nselect * from stores\nwhere stores.`name` in (\n  select boutiquename from boutiques\n)\n",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 21:11:26.828",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1201,6 +1221,7 @@
       "text": "%spark\nval inOper \u003d spark.sql(\n\"\"\"    \nselect * from stores \nwhere stores.`name` in (\n  select boutiquename from boutiques\n)\n\"\"\"    \n)\ninOper.explain(\"formatted\")",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 21:38:55.077",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1243,6 +1264,7 @@
       "text": "%spark\nval notInOper \u003d spark.sql(\n\"\"\"\nselect * from stores \nwhere stores.`name` \nnot in (\n  select boutiquename from boutiques\n)\n\"\"\"\n)\nnotInOper.explain()",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 21:37:27.378",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1285,6 +1307,7 @@
       "text": "%sql\nselect stores.*, store_occupants.*\nfrom stores \nfull join store_occupants \non stores.`name` \u003d\u003d store_occupants.`storename`",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 22:03:52.318",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1385,6 +1408,7 @@
       "text": "%spark\n// add some rows to the stores data (to showcase missing occupancy rows)\nval addStores \u003d spark.createDataFrame(Seq(\n  (\"f\", 42, 5, 23),\n  (\"g\", 19, 7, 18)))\n  .toDF(\"name\",\"capacity\",\"opens\",\"closes\")\n\ndf.union(addStores).show()\n\nval fullJoined \u003d df\n  .union(addStores)\n  .join(occupancy,\n    df(\"name\") \u003d\u003d\u003d occupancy(\"storename\"),\n    \"full\")\n\nfullJoined.show()\n\n// show the query plan\nfullJoined.explain(\"formatted\")",
       "user": "anonymous",
       "dateUpdated": "2021-02-06 22:33:47.455",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1458,6 +1482,7 @@
       "text": "%spark\nspark.sql(\n\"\"\"\nselect name, (capacity-occupants) as availability\nfrom stores \njoin store_occupants\non stores.`name` \u003d\u003d store_occupants.`storename`\n\"\"\"\n).show()",
       "user": "anonymous",
       "dateUpdated": "2021-02-07 00:59:10.914",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1516,6 +1541,7 @@
       "text": "%spark\nspark.sql(\n\"\"\"\nselect name, (capacity-occupants) as availability\nfrom stores \njoin store_occupants\non stores.`name` \u003d\u003d store_occupants.`storename`\nwhere availability \u003e 4\n\"\"\"\n).show()",
       "user": "anonymous",
       "dateUpdated": "2021-02-07 01:00:09.082",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1558,6 +1584,7 @@
       "text": "%sql\nselect name, availability from (\n  select name, (capacity-occupants) as availability\n  from stores \n  join store_occupants\n  on stores.`name` \u003d\u003d store_occupants.`storename`\n) where availability \u003e 4",
       "user": "anonymous",
       "dateUpdated": "2021-02-07 01:20:59.475",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1645,6 +1672,7 @@
       "text": "%sql\nselect name from stores \njoin store_occupants\non stores.`name` \u003d\u003d store_occupants.`storename`\nwhere (capacity-occupants) \u003e 4",
       "user": "anonymous",
       "dateUpdated": "2021-02-07 01:20:11.183",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1731,6 +1759,7 @@
       "text": "%spark\nimport spark.implicits._\n\nval partySize \u003d 4\n\nval hasSeats \u003d df\n  .join(occupancy, df(\"name\") \u003d\u003d\u003d occupancy(\"storename\"))\n  .withColumn(\"availability\", $\"capacity\".minus($\"occupants\"))\n  .where($\"availability\" \u003e\u003d partySize)\n  .select(\"name\")\n\nhasSeats.show\n\n//hasSeats.explain(\"simple\")\n",
       "user": "anonymous",
       "dateUpdated": "2021-02-07 01:59:48.678",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1788,6 +1817,7 @@
       "text": "%md\n## Chapter 5 Preview: Looking at SparkSQL Query Plans (Catalyst Engine)\nThis section shows the same queries from above. The difference here is that the underlying query plan is being output so you can see the steps Spark takes from plan, to execution. This showcases why it pays for Spark to be Lazy, which we will find out in more details during the next chapter. ",
       "user": "anonymous",
       "dateUpdated": "2021-02-07 02:02:46.596",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1831,6 +1861,7 @@
       "text": "%spark\nval findAvailability \u003d spark.sql(\n\"\"\"\nselect name, availability from (\n  select name, (capacity-occupants) as availability\n  from stores \n  join store_occupants\n  on stores.`name` \u003d\u003d store_occupants.`storename`\n) where availability \u003e 4\n\"\"\"\n)\nfindAvailability.explain(\"simple\")\n\nfindAvailability.show()",
       "user": "anonymous",
       "dateUpdated": "2021-02-07 02:01:36.672",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1889,6 +1920,7 @@
       "text": "%spark\n// removing the column availability from the final projection enables Spark to optimize on your behalf\nval findAvailabilitySelfOptimized \u003d spark.sql(\n\"\"\"\nselect name from (\n  select name, (capacity-occupants) as availability\n  from stores \n  join store_occupants\n  on stores.`name` \u003d\u003d store_occupants.`storename`\n) where availability \u003e 4\n\"\"\"\n)\nfindAvailabilitySelfOptimized.explain(\"simple\")\n\nfindAvailabilitySelfOptimized.show()",
       "user": "anonymous",
       "dateUpdated": "2021-02-07 01:22:56.414",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1947,6 +1979,7 @@
       "text": "%spark\n// manually optimizing the query actually has the same performance as the Spark optimized query (Second Pass).\nval findAvailabilityOptimized \u003d spark.sql(\n\"\"\"\nselect name from stores \njoin store_occupants\non stores.`name` \u003d\u003d store_occupants.`storename`\nwhere (capacity-occupants) \u003e 4\n\"\"\"\n)\nfindAvailabilityOptimized.explain(\"simple\")\nfindAvailabilityOptimized.show()",
       "user": "anonymous",
       "dateUpdated": "2021-02-07 01:24:10.862",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -2005,6 +2038,7 @@
       "text": "%spark\n// you\u0027ll notice that the query plan for our DataFrame transformation is exactly the same as our manually optimized SQL... \n df\n  .join(occupancy, df(\"name\") \u003d\u003d\u003d occupancy(\"storename\"))\n  .withColumn(\"availability\", $\"capacity\".minus($\"occupants\"))\n  .where($\"availability\" \u003e\u003d partySize)\n  .select(\"name\")\n  .explain(\"simple\")",
       "user": "anonymous",
       "dateUpdated": "2021-02-07 02:04:14.361",
+      "progress": 0,
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -2046,6 +2080,7 @@
       "text": "%spark\n",
       "user": "anonymous",
       "dateUpdated": "2021-02-07 02:03:16.489",
+      "progress": 0,
       "config": {},
       "settings": {
         "params": {},
@@ -2070,7 +2105,5 @@
   "config": {
     "isZeppelinNotebookCronEnable": false
   },
-  "info": {
-    "isRunning": false
-  }
+  "info": {}
 }
