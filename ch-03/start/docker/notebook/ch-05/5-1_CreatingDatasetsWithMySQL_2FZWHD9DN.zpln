@@ -3,7 +3,7 @@
     {
       "text": "%md\n## MySQL Docker Environment\nThis chapter\u0027s docker environment spins up `MySQL 8`.\nThe user `dataeng` has been created for working with MySQL data in Spark.\nThe password is customized in the `docker-compose-all.yaml` under `MYSQL_PASSWORD` (`dataengineering_user`). \n\nTo get into the MySQL console, use the following. When prompted use the password `dataengineering_user`\n~~~\ndocker exec -it mysql bash\nmysql -u dataeng -p\n~~~\n\nWhen you are logged in. You should see the following: \n~~~\nWelcome to the MySQL monitor.  Commands end with ; or \\g.\nYour MySQL connection id is 11\nServer version: 8.0.23 MySQL Community Server - GPL\n\nCopyright (c) 2000, 2021, Oracle and/or its affiliates.\n\nOracle is a registered trademark of Oracle Corporation and/or its\naffiliates. Other names may be trademarks of their respective\nowners.\n\nType \u0027help;\u0027 or \u0027\\h\u0027 for help. Type \u0027\\c\u0027 to clear the current input statement.\n\nmysql\u003e \n~~~\n",
       "user": "anonymous",
-      "dateUpdated": "2021-02-16 00:45:40.370",
+      "dateUpdated": "2023-02-22 01:06:51.462",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -39,14 +39,14 @@
       "jobName": "paragraph_1613341150711_1824638657",
       "id": "paragraph_1613341150711_1824638657",
       "dateCreated": "2021-02-14 22:19:10.711",
-      "dateStarted": "2021-02-16 00:45:40.371",
-      "dateFinished": "2021-02-16 00:45:40.395",
+      "dateStarted": "2023-02-22 01:06:51.462",
+      "dateFinished": "2023-02-22 01:06:51.474",
       "status": "FINISHED"
     },
     {
-      "text": "%md\n## Create a Table and add some Data\n1. Reconnect to the Docker mysql container. `docker exec -it mysql bash` and run `mysql -u dataeng -p` and re-enter your password.\n2. Create the customers table\n3. Add some customers\n\n### Create the Customers Table\n~~~\nCREATE TABLE IF NOT EXISTS customers (\n  id VARCHAR(32),\n  created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n  updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  first_name VARCHAR(100),\n  last_name VARCHAR(100),\n  email VARCHAR(255)\n);\n\n~~~\n\n### Add Some Customers to your Table\n~~~\nINSERT INTO customers (id, first_name, last_name, email)\nVALUES\n(\"1\", \"Scott\", \"Haines\", \"scott@coffeeco.com\"),\n(\"2\", \"John\", \"Hamm\", \"john.hamm@acme.com\"),\n(\"3\", \"Milo\", \"Haines\", \"mhaines@coffeeco.com\");\n~~~",
+      "text": "%md\n## Create a Table and add some Data\n1. Reconnect to the Docker mysql container. `docker exec -it mysql bash` and run `mysql -u dataeng -p` and re-enter your password.\n2. Create the customers table\n3. Add some customers\n\n### Create the Customers Table\n~~~\nCREATE TABLE IF NOT EXISTS customers (\n  id VARCHAR(32),\n  created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n  updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  first_name VARCHAR(100),\n  last_name VARCHAR(100),\n  email VARCHAR(255)\n);\n\n~~~\n\n### Add Some Customers to your Table\n~~~\nINSERT INTO customers (id, first_name, last_name, email)\nVALUES\n(1, \u0027Scott\u0027, \u0027Haines\u0027, \u0027scott@coffeeco.com\u0027),\n(2, \u0027John\u0027, \u0027Hamm\u0027, \u0027john.hamm@acme.com\u0027),\n(3, \u0027Milo\u0027, \u0027Haines\u0027, \u0027mhaines@coffeeco.com\u0027);\n\n~~~",
       "user": "anonymous",
-      "dateUpdated": "2023-02-21 23:45:23.870",
+      "dateUpdated": "2023-02-22 01:31:53.647",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
