@@ -252,3 +252,4 @@ ENV/
 docker/ch-03/start/docker/spark/conf/spark-defaults.conf
 spark-defaults.conf
 hive-site.xml
+docker/ch-03/start/docker/data/mysqldir
