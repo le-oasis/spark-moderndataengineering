@@ -951,7 +951,7 @@
     {
       "text": "%md\n# Fixing the Customers Table\n\n~~~sql\nCREATE TABLE IF NOT EXISTS `customers` (\n  `id` text,\n  `created` timestamp NULL DEFAULT NULL,\n  `updated` timestamp NULL DEFAULT NULL,\n  `first_name` text,\n  `last_name` text,\n  `email` text\n);\n~~~\n\nThe initial customers table we whipped up in Exercise 5-1 is a little naive. We can do *better*.\n\n## Creating a Better Customers Table\nThe `bettercustomers` table has to be created first inside the database because spark doesn\u0027t recognize `AUTO_INCREMENT` in the table definition.\n~~~sql\nCREATE TABLE IF NOT EXISTS `bettercustomers` (\n  `id` mediumint NOT NULL AUTO_INCREMENT COMMENT \u0027customer automatic id\u0027,\n  `created` timestamp DEFAULT CURRENT_TIMESTAMP COMMENT \u0027customer join date\u0027,\n  `updated` timestamp DEFAULT CURRENT_TIMESTAMP COMMENT \u0027last record update\u0027,\n  `first_name` varchar(100) NOT NULL,\n  `last_name` varchar(100) NOT NULL,\n  `email` varchar(255) NOT NULL UNIQUE,\n  PRIMARY KEY (`id`)\n);\n~~~\n\n### Inserting Customer Records Into BetterCustomers Table\n~~~sql\nINSERT INTO bettercustomers (created, first_name, last_name, email)\nVALUES\n(\"2021-02-16 00:16:06\", \"Scott\", \"Haines\", \"scott@coffeeco.com\"),\n(\"2021-02-16 00:16:06\", \"John\", \"Hamm\", \"john.hamm@acme.com\"),\n(\"2021-02-16 00:16:06\", \"Milo\", \"Haines\", \"mhaines@coffeeco.com\"),\n(\"2021-02-21 21:00:00\", \"Penny\", \"Haines\", \"penny@coffeeco.com\"),\n(\"2021-02-21 22:00:00\", \"Cloud\", \"Fast\", \"cloud.fast@acme.com\"),\n(\"2021-02-21 23:00:00\", \"Marshal\", \"Haines\", \"paws@coffeeco.com\"),\n(\"2021-02-24 09:00:00\", \"Willow\", \"Haines\", \"willow@coffeeco.com\"),\n(\"2021-02-24 09:00:00\", \"Clover\", \"Haines\", \"pup@coffeeco.com\");\n~~~",
       "user": "anonymous",
-      "dateUpdated": "2021-03-05 22:39:18.714",
+      "dateUpdated": "2023-03-06 09:24:40.511",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -987,15 +987,15 @@
       "jobName": "paragraph_1614213858686_160867183",
       "id": "paragraph_1614213858686_160867183",
       "dateCreated": "2021-02-25 00:44:18.686",
-      "dateStarted": "2021-03-05 22:39:18.716",
-      "dateFinished": "2021-03-05 22:39:18.731",
+      "dateStarted": "2023-03-06 09:24:40.512",
+      "dateFinished": "2023-03-06 09:24:42.703",
       "status": "FINISHED"
     },
     {
       "title": "Load up our Better Customers",
       "text": "%spark\nval betterCustomers \u003d spark.read\n  .format(\"jdbc\")\n  .option(\"url\", connectionUrl)\n  .option(\"driver\", jdbcDriver)\n  .option(\"dbtable\", \"bettercustomers\")\n  .option(\"user\", dbUser)\n  .option(\"password\", dbPass)\n  .load()\n\nbetterCustomers.printSchema\n\nbetterCustomers.show(false)\n\nbetterCustomers.createOrReplaceTempView(\"bettercustomers\")",
       "user": "anonymous",
-      "dateUpdated": "2022-07-12 14:42:11.560",
+      "dateUpdated": "2023-03-06 09:26:08.448",
       "progress": 100,
       "config": {
         "colWidth": 12.0,
